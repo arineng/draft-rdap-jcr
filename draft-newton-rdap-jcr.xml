@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "http://xml.resource.org/authoring/rfc2629.dtd"
+[
+
+<!ENTITY RFC7159 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7159.xml'>
+<!ENTITY RFC7483 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7483.xml'>
+<!ENTITY I-D.newton-json-content-rules PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.newton-json-content-rules.xml'>
+]>
+<?rfc toc="true"?>
+<rfc category="info" docName="draft-newton-rdap-jcr-00" ipr="trust200902">
+    <front>
+        <title abbrev="JSON Content Rules">A Language for Rules Describing JSON Content</title>
+        <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
+            <organization abbrev="ARIN">American Registry for Internet Numbers</organization>
+            <address>
+                <postal>
+                    <street>3635 Concorde Parkway</street>
+                    <city>Chantilly</city>
+                    <region>VA</region>
+                    <country>US</country>
+                    <code>20151</code>
+                </postal>
+                <email>andy@arin.net</email>
+                <uri>http://www.arin.net</uri>
+            </address>
+        </author>
+        <date/>
+        <abstract>
+            <t>
+                This document describes the JSON responses in the Registration Data Access
+                Protocol with the formal notation of JSON Content Rules.
+            </t>
+        </abstract>
+    </front>
+    <middle>
+        <section title="Introduction">
+            <t>
+                The <xref target="RFC7159">JSON</xref> responses of the
+                <xref target="RFC7483">Registration Data Access Protocol</xref> are officially defined
+                with English prose. Those definitions contain imprecise or ambiguous JSON 
+                structures and require lengthy, tedious examples in the attempt to offer
+                clarification. The English prose can be difficult for non-native English readers,
+                and the examples create their own confusion.
+            </t>
+            <t>
+                This document describes the JSON found in RDAP with 
+                <xref target="I-D.newton-json-content-rules">JSON Content Rules</xref> (JCR).
+            </t>
+            <t>
+                JCR overcomes some of the obstacles of describing JSON with English prose, reducing
+                the tediousness of the prose and accompanying lengthy examples to understandable
+                data structures. Additionally, JCR has mechanisms which can be used by software
+                developers to create test harnesses and technology compatibility kits.
+            </t>
+            
+            
+        </section>
+        <section title="Complete JCR for RDAP">
+            <figure title="Complete JSON Content Rules for RDAP">
+                <preamble>
+                    The following is the complete ruleset of JSON Content Rules for RDAP.
+                </preamble>
+                <artwork xml:space="preserve">
+;
+; Response
+;
+
+entity_response           @(root) { response_mixin, entity_mixin }
+nameserver_response       @(root) { response_mixin, nameserer_mixin }
+domain_response           @(root) { response_mixin, domain_mixin }
+network_response          @(root) { response_mixin, network_mixin }
+autnum_response           @(root) { response_mixin, autnum_mixin }
+error_response            @(root) { response_mixin, error_mixin }
+help_response             @(root) { response_mixin }
+domainSearch_response     @(root) { response_mixin, domainSearchResult }
+nameserverSearch_response @(root) { response_mixin, nameserverSearchResult }
+entitySearch_response     @(root) { response_mixin, entitySearchResult }
+
+response_mixin (
+   ? rdapConformance,
+   ? "notices" notices,
+     lang
+)
+
+;
+; RFC 7483 Section 4.1 - RDAP Conformance                   
+;
+
+rdapConformance "rdapConformance" [ * :string ]
+
+;
+; RFC 7483 Section 4.2 - Links
+;
+
+links ( ? "links" [ * link ] )
+
+; see RFC 5988
+link {
+   ? "value"    : uri,
+   ? "rel"      : string,
+     "href"     : uri,
+   ? "hreflang" [ * lang_value ],
+   ? "title"    : string,
+   ? "media"    : string,
+   ? "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/
+}
+
+;
+; RFC 7483 Section 4.3 - Notices
+;
+
+notices [ * notice ]
+
+notice {
+    ? "title"       : string,
+      "description" [ * :string ],
+    ? "type"        : string,
+      links,
+      lang
+}
+
+;
+; RFC 7483 Section 4.4 - Language Identifier
+;
+
+lang_value : /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+lang ( ? "lang" lang_value )
+
+;
+; RFC 7483 Section 4.5 - Events
+;
+
+events "events" [ * event ]
+
+event {
+     "eventAction" : string,
+   ? "eventActor"  : string,
+     "eventDate"   : date-time,
+     links,
+     lang
+}
+
+;
+; RFC 7483 Section 4.6 - Status
+;
+
+status "status" [ *: string ]
+
+;
+; RFC 7483 Section 4.7 - Port43
+;
+
+port43 "port43" : string
+
+;
+; RFC 7482 Section 4.8 - Public Ids
+;
+
+publicIds "publicIds" [ * publicId ]
+
+publicId {
+  "type"      : string,
+  "identifier": string
+}
+
+;
+; Common Object Class Structures
+;
+
+common_mixin (
+   ? "handle"  : string
+   ? "remarks" [ * notice ],
+   ? links,
+   ? events,
+   ? status,
+   ? port43,
+     lang
+}
+
+;
+; RFC 7483 Section 5.1 - Entity Object Class
+;
+
+entities "entities" [ * entity_oc ]
+
+entity_oc {
+   entity_mixin
+}
+
+entity_mixin (
+     "objectClassName" : "entity",
+     common_mixin,
+   ? "vcardArray"      [ :"vcard", [ * vcard ] ]
+   ? "asEventActor"    [ * event ]
+   ? "roles"           [ * :string ],
+   ? publicIds,
+   ? entities,
+   ? "networks"        [ * network_oc ],
+   ? "autnums"         [ * autnum_oc ]
+)
+
+; See RFC 7095
+vcard @(unordered) [
+     [ :"version", {}, :"text", :"4.0" ],
+     [ :"fn", {}, :"text", :string ],
+   * [ :string, { */.*/:any }, :"text", ( :string | [ * :string ] ) ]
+]
+
+;
+; RFC 7483 Section 5.2 - Nameserver Object Class
+;
+
+nameservers "nameservers" [ * nameserver_oc ]
+
+nameserver_oc {
+   nameserver_mixin
+}
+
+nameserver_mixin (
+     "objectClassName" : "nameserver",
+     common_mixin,
+     "ldhName"         : fqdn,
+   ? "unicodeName"     : idn,
+   ? "ipAddresses      { ? "v4" [ * ip4 ], ? "ip6" [ * ip6 ] },
+   ? entities
+)
+
+;
+; RFC 7483 Section 5.3 - Domain Object Class
+;
+
+domain_oc {
+   domain_mixin
+}
+
+domain_mixin (
+     "objectClassName" : "domain",
+     common_mixin,
+     "ldhName"         : fqdn,
+   ? "unicodeName"     : idn,
+   ? "variants"        [ * variant ],
+   ? nameservers,
+   ? secureDns
+)
+
+variant {
+   ? "relation" [ * : string ],
+   ? "idnTable" : string,
+     "variantNames" [ * { "ldhName" : fqdn, "unicodeName" : idn } ]
+}
+
+secureDNS "secureDNS" {
+   ? "zoneSigned"       : boolean,
+   ? "delegationSigned" : boolean,
+   ? "maxSigLife"       : integer,
+   ? "dsData"           [ * dsData_obj ],
+   ? "keyData"          [ * keyData_obj ],
+   ? entities,
+   ? publicIds,
+   ? "network"          network_oc
+}
+
+dsData_obj {
+     "keyTag"     : integer,
+     "algorithm"  : integer,
+     "digest"     : string,
+     "digestType" : integer,
+   ? events,
+   ? links
+}
+
+keyData_obj {
+     "flags"     : integer,
+     "protocol"  : integer,
+     "publicKey" : string,
+     "algorithm" : integer,
+   ? events,
+   ? links
+}
+
+;
+; RFC 7483 Section 5.4 - IP Network Object Class
+;
+
+network_oc {
+   network_mixin
+}
+
+network_mixin (
+     "objectClassName" : "ip network",
+     common_mixin,
+   ? "startAddress"    : ( :ip4 | :ip6 ),
+   ? "endAddres"       : ( :ip4 | :ip6 ),
+   ? "ipVersion"       : ( :"v4" | :"v6" ),
+   ? "name"            : string,
+   ? "type"            : string,
+   ? "country"         : /[A-Z]{2}/,
+   ? "parentHandle"    : string,
+   ? entities
+)
+
+;
+; RFC 7483 Section 5.5 - Autnum Object Class
+;
+
+autnum_oc {
+   autnum_mixin
+}
+
+autnum_mixin (
+     "objectClassName" : "autnum",
+     common_mixin,
+   ? "startAutnum"     : integer,
+   ? "endAutnum"       : integer,
+   ? "name"            : string,
+   ? "type"            : string,
+   ? "entities
+)
+
+;
+; RFC 7483 Section 6 - Error
+;
+
+error_mixin (
+     "errorCode"   : integer,
+   ? "title"       : string,
+   ? "description" [ * : string ]   
+)
+
+;
+; RFC 7483 Section 8 - Search Results
+;
+
+domainSearchResult     "domainSearchResult"     [ * domain_oc ]
+nameserverSearchResult "nameserverSearchResult" [ * nameserver_oc ]
+entitySearchResult     "entitySearchResult"     [ * entity_oc ]
+
+                </artwork>
+            </figure>
+        </section>        
+
+    </middle>
+    <back>
+        <references title="Normative References">
+            
+            &RFC7159;
+            &RFC7483;
+            &I-D.newton-json-content-rules;
+            
+        </references>
+    </back>
+</rfc>
