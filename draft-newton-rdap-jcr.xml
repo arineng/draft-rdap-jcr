@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM "http://xml.resource.org/authoring/rfc2629.dtd"
 [
-
+<!ENTITY RFC5988 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.5988.xml'>
+<!ENTITY RFC7095 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7095.xml'>
 <!ENTITY RFC7159 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7159.xml'>
 <!ENTITY RFC7483 PUBLIC ''
@@ -55,8 +58,397 @@
                 data structures. Additionally, JCR has mechanisms which can be used by software
                 developers to create test harnesses and technology compatibility kits.
             </t>
-            
-            
+            <t>
+                Though this document describes all of the JSON found in <xref target="RFC7483"></xref>,
+                it presents the structures in a different order. The rules defined here use the JCR
+                mixin style of specification, where common structures are defined in group rules instead
+                of separately, distinct objects.
+            </t>
+        </section>
+        <section title="Response">
+            <t>
+                <xref target="RFC7483"></xref> describes ten distinct JSON response: five
+                entity class response, an error response, a help response, and three search
+                responses.
+            </t>
+            <figure>
+                <artwork xml:space="preserve">
+    entity_response           @(root) { response_mixin, 
+                                        entity_mixin           }
+    nameserver_response       @(root) { response_mixin, 
+                                        nameserer_mixin        }
+    domain_response           @(root) { response_mixin, 
+                                        domain_mixin           }
+    network_response          @(root) { response_mixin, 
+                                        network_mixin          }
+    autnum_response           @(root) { response_mixin, 
+                                        autnum_mixin           }
+    error_response            @(root) { response_mixin, 
+                                        error_mixin            }
+    help_response             @(root) { response_mixin         }
+    domainSearch_response     @(root) { response_mixin, 
+                                        domainSearchResult     }
+    nameserverSearch_response @(root) { response_mixin, 
+                                        nameserverSearchResult }
+    entitySearch_response     @(root) { response_mixin, 
+                                        entitySearchResult     }                   
+                </artwork>
+            </figure>
+            <t>
+                All of the responses have a common set of object members described
+                by response_mixin.
+            </t>
+            <figure>
+                <artwork xml:space="preserve">
+    response_mixin (
+       ? rdapConformance,
+       ? "notices" notices,
+         lang
+    )     
+                </artwork>
+            </figure>
+        </section>
+        <section title="Object Classes">
+            <t>
+                The primary data structures in RDAP are called object classes. These are first order
+                object instances with identifiers. They are JSON objects which contain other JSON data
+                types.
+            </t>
+            <section title="Entity Object Class">
+                <t>
+                    The Entity object class represents persons or organizations. It incorporates
+                    <xref target="RFC7095">jCard</xref> (vCard in JSON) for contact information.
+                    The rules supplied here only provide for a basic validation of jCard, as the
+                    validation of jCard is beyond the scope of this document.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    entities "entities" [ * entity_oc ]
+    
+    entity_oc {
+       entity_mixin
+    }
+    
+    entity_mixin (
+         "objectClassName" : "entity",
+         common_mixin,
+       ? "vcardArray"      [ :"vcard", [ * vcard ] ]
+       ? "asEventActor"    [ * event ]
+       ? "roles"           [ * :string ],
+       ? publicIds,
+       ? entities,
+       ? "networks"        [ * network_oc ],
+       ? "autnums"         [ * autnum_oc ]
+    )
+    
+    vcard @(unordered) [
+         [ :"version", {}, :"text", :"4.0" ],
+         [ :"fn", {}, :"text", :string ],
+       * [ :string, 
+           { */.*/:any }, 
+           :"text", 
+           ( :string | [ * :string ] ) 
+         ]
+    ]
+                </artwork>
+                </figure>
+            </section>
+            <section title="Nameserver Object Class">
+                <t>
+                    The nameserver object class represents DNS nameservers in registries.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    nameservers "nameservers" [ * nameserver_oc ]
+    
+    nameserver_oc {
+       nameserver_mixin
+    }
+    
+    nameserver_mixin (
+         "objectClassName" : "nameserver",
+         common_mixin,
+         "ldhName"         : fqdn,
+       ? "unicodeName"     : idn,
+       ? "ipAddresses      { ? "v4" [ * ip4 ], ? "ip6" [ * ip6 ] },
+       ? entities
+    )
+                </artwork>
+                </figure>
+            </section>
+            <section title="Domain Object Class">
+                <t>
+                    The Domain object class is the most complex of all the object classes
+                    defined in RDAP. It represents both forward and reverse DNS delegations.
+                    It's complexity is mostly due to the DNSSEC provisions of the object class.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    domain_oc {
+       domain_mixin
+    }
+    
+    domain_mixin (
+         "objectClassName" : "domain",
+         common_mixin,
+         "ldhName"         : fqdn,
+       ? "unicodeName"     : idn,
+       ? "variants"        [ * variant ],
+       ? nameservers,
+       ? secureDns
+    )
+    
+    variant {
+       ? "relation" [ * : string ],
+       ? "idnTable" : string,
+         "variantNames" [ * { "ldhName" : fqdn, "unicodeName" : idn } ]
+    }
+    
+    secureDNS "secureDNS" {
+       ? "zoneSigned"       : boolean,
+       ? "delegationSigned" : boolean,
+       ? "maxSigLife"       : integer,
+       ? "dsData"           [ * dsData_obj ],
+       ? "keyData"          [ * keyData_obj ],
+       ? entities,
+       ? publicIds,
+       ? "network"          network_oc
+    }
+    
+    dsData_obj {
+         "keyTag"     : integer,
+         "algorithm"  : integer,
+         "digest"     : string,
+         "digestType" : integer,
+       ? events,
+       ? links
+    }
+    
+    keyData_obj {
+         "flags"     : integer,
+         "protocol"  : integer,
+         "publicKey" : string,
+         "algorithm" : integer,
+       ? events,
+       ? links
+    }
+                </artwork>
+                </figure>
+            </section>
+            <section title="IP Network Object Class">
+                <t>
+                    The IP Network object class represents IP network registrations in RIRs.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    network_oc {
+       network_mixin
+    }
+    
+    network_mixin (
+         "objectClassName" : "ip network",
+         common_mixin,
+       ? "startAddress"    : ( :ip4 | :ip6 ),
+       ? "endAddres"       : ( :ip4 | :ip6 ),
+       ? "ipVersion"       : ( :"v4" | :"v6" ),
+       ? "name"            : string,
+       ? "type"            : string,
+       ? "country"         : /[A-Z]{2}/,
+       ? "parentHandle"    : string,
+       ? entities
+    )
+                </artwork>
+                </figure>
+            </section>
+            <section title="Autnum Object Class">
+                <t>
+                    The Autnum object class represents an autonomous system number or blocks of
+                    autonomous system numbers in an RIR.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    autnum_oc {
+       autnum_mixin
+    }
+    
+    autnum_mixin (
+         "objectClassName" : "autnum",
+         common_mixin,
+       ? "startAutnum"     : integer,
+       ? "endAutnum"       : integer,
+       ? "name"            : string,
+       ? "type"            : string,
+       ? "entities
+    )
+                </artwork>
+                </figure>
+            </section>
+        </section>
+        <section title="Search Results">
+            <t>
+                Search results in RDAP are merely arrays of object classes.
+            </t>
+            <figure>
+                <artwork xml:space="preserve">
+    domainSearchResult     "domainSearchResult"     [ * domain_oc ]
+    nameserverSearchResult "nameserverSearchResult" [ * nameserver_oc ]
+    entitySearchResult     "entitySearchResult"     [ * entity_oc ]
+                </artwork>
+            </figure>
+        </section>
+        <section title="Common Structures">
+            <t>
+                Section 4 of <xref target="RFC7483"></xref> describes eight common structures
+                used throughout the JSON in RDAP.
+            </t>
+            <t>
+                Most of these common structures are grouped together in a rule called common_mixin.
+            </t>
+            <figure>
+                <artwork xml:space="preserve">
+    common_mixin (
+       ? "handle"  : string
+       ? "remarks" [ * notice ],
+         links,
+       ? events,
+       ? status,
+       ? port43,
+         lang
+    }  
+                </artwork>
+            </figure>
+            <section title="RDAP Conformance">
+                <t>
+                    The rdapConformance array is the versioning and capabilities negotiation
+                    mechanism of RDAP.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    rdapConformance "rdapConformance" [ * :string ]  
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Links">
+                <t>
+                    Structures in RDAP may link to information in other data systems
+                    using links. Additionally, RDAP uses "self" links to identify instances
+                    of RDAP object classes. The data found in each link is described by
+                    <xref target="RFC5988"></xref>.
+                </t>
+                <t>
+                    RDAP links are an array of distinct objects, each representing
+                    a separate link.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    links ( ? "links" [ * link ] )
+    
+    ; see RFC 5988
+    link {
+       ? "value"    : uri,
+       ? "rel"      : string,
+         "href"     : uri,
+       ? "hreflang" [ * lang_value ],
+       ? "title"    : string,
+       ? "media"    : string,
+       ? "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/
+    }
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Notices And Remarks">
+                <t>
+                    In RDAP, notices and remarks share the same structure. The difference is that
+                    notices are meta-data regarding the entirety of a response whereas remarks are
+                    meta-data covering a specific instance of an object class.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    notices [ * notice ]
+    
+    notice {
+        ? "title"       : string,
+          "description" [ * :string ],
+        ? "type"        : string,
+          links,
+          lang
+    }
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Language Identifier">
+                <t>
+                    The "lang" member occurs many RDAP data structures. And the same construct is
+                    used in the links structures.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    lang_value : /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+    lang ( ? "lang" lang_value )
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Events">
+                <t>
+                    RDAP events note when a specific action has occured on an object instance,
+                    and by whom. The same structure appears in all object classes, as well as
+                    being re-used by entities embedded by other objects.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    events "events" [ * event ]
+    
+    event {
+         "eventAction" : string,
+       ? "eventActor"  : string,
+         "eventDate"   : date-time,
+         links,
+         lang
+    }
+                    </artwork>
+                </figure>
+            </section>
+
+            <section title="Status">
+                <t>
+                    The status of RDAP object instances is indicated by an array of strings,
+                    where the value of the strings are registered in an IANA registry.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    status "status" [ *: string ]                        
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Port 43">
+                <t>
+                    RDAP object classes reference their corresponding Whois representation
+                    using the "port43" object member. This is simply a string holding the hostname
+                    of the Whois service.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    port43 "port43" : string
+                    </artwork>
+                </figure>
+            </section>
+            <section title="Public IDs">
+                <t>
+                    Some RDAP services are required to identify entities and domains by
+                    public identifiers, such as ICANN Registrar IDs. The publicIds object
+                    member is an array of objects to represent these identifiers.
+                </t>
+                <figure>
+                    <artwork xml:space="preserve">
+    publicIds "publicIds" [ * publicId ]
+    
+    publicId {
+      "type"      : string,
+      "identifier": string
+    }
+                    </artwork>
+                </figure>
+            </section>
         </section>
         <section title="Complete JCR for RDAP">
             <figure title="Complete JSON Content Rules for RDAP">
@@ -75,9 +467,12 @@ network_response          @(root) { response_mixin, network_mixin }
 autnum_response           @(root) { response_mixin, autnum_mixin }
 error_response            @(root) { response_mixin, error_mixin }
 help_response             @(root) { response_mixin }
-domainSearch_response     @(root) { response_mixin, domainSearchResult }
-nameserverSearch_response @(root) { response_mixin, nameserverSearchResult }
-entitySearch_response     @(root) { response_mixin, entitySearchResult }
+domainSearch_response     @(root) { response_mixin, 
+                                    domainSearchResult }
+nameserverSearch_response @(root) { response_mixin, 
+                                    nameserverSearchResult }
+entitySearch_response     @(root) { response_mixin, 
+                                    entitySearchResult }
 
 response_mixin (
    ? rdapConformance,
@@ -173,7 +568,7 @@ publicId {
 common_mixin (
    ? "handle"  : string
    ? "remarks" [ * notice ],
-   ? links,
+     links,
    ? events,
    ? status,
    ? port43,
@@ -206,7 +601,11 @@ entity_mixin (
 vcard @(unordered) [
      [ :"version", {}, :"text", :"4.0" ],
      [ :"fn", {}, :"text", :string ],
-   * [ :string, { */.*/:any }, :"text", ( :string | [ * :string ] ) ]
+   * [ :string, 
+       { */.*/:any }, 
+       :"text", 
+       ( :string | [ * :string ] ) 
+     ]
 ]
 
 ;
@@ -346,6 +745,8 @@ entitySearchResult     "entitySearchResult"     [ * entity_oc ]
     <back>
         <references title="Normative References">
             
+            &RFC5988;
+            &RFC7095;
             &RFC7159;
             &RFC7483;
             &I-D.newton-json-content-rules;
