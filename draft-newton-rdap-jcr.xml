@@ -13,9 +13,9 @@
    'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.newton-json-content-rules.xml'>
 ]>
 <?rfc toc="true"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-00" ipr="trust200902">
+<rfc category="info" docName="draft-newton-rdap-jcr-01" ipr="trust200902">
     <front>
-        <title abbrev="JSON Content Rules">A Language for Rules Describing JSON Content</title>
+        <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
             <organization abbrev="ARIN">American Registry for Internet Numbers</organization>
             <address>
@@ -73,24 +73,24 @@
             </t>
             <figure>
                 <artwork xml:space="preserve">
-    entity_response           @(root) { response_mixin, 
+    entity_response           @{root} { response_mixin, 
                                         entity_mixin           }
-    nameserver_response       @(root) { response_mixin, 
+    nameserver_response       @{root} { response_mixin, 
                                         nameserer_mixin        }
-    domain_response           @(root) { response_mixin, 
+    domain_response           @{root} { response_mixin, 
                                         domain_mixin           }
-    network_response          @(root) { response_mixin, 
+    network_response          @{root} { response_mixin, 
                                         network_mixin          }
-    autnum_response           @(root) { response_mixin, 
+    autnum_response           @{root} { response_mixin, 
                                         autnum_mixin           }
-    error_response            @(root) { response_mixin, 
+    error_response            @{root} { response_mixin, 
                                         error_mixin            }
-    help_response             @(root) { response_mixin         }
-    domainSearch_response     @(root) { response_mixin, 
+    help_response             @{root} { response_mixin         }
+    domainSearch_response     @{root} { response_mixin, 
                                         domainSearchResult     }
-    nameserverSearch_response @(root) { response_mixin, 
+    nameserverSearch_response @{root} { response_mixin, 
                                         nameserverSearchResult }
-    entitySearch_response     @(root) { response_mixin, 
+    entitySearch_response     @{root} { response_mixin, 
                                         entitySearchResult     }                   
                 </artwork>
             </figure>
@@ -141,7 +141,7 @@
        ? "autnums"         [ * autnum_oc ]
     )
     
-    vcard @(unordered) [
+    vcard @{unordered} [
          [ :"version", {}, :"text", :"4.0" ],
          [ :"fn", {}, :"text", :string ],
        * [ :string, 
@@ -314,7 +314,7 @@
        ? status,
        ? port43,
          lang
-    }  
+    )  
                 </artwork>
             </figure>
             <section title="RDAP Conformance">
@@ -460,18 +460,18 @@
 ; Response
 ;
 
-entity_response           @(root) { response_mixin, entity_mixin }
-nameserver_response       @(root) { response_mixin, nameserer_mixin }
-domain_response           @(root) { response_mixin, domain_mixin }
-network_response          @(root) { response_mixin, network_mixin }
-autnum_response           @(root) { response_mixin, autnum_mixin }
-error_response            @(root) { response_mixin, error_mixin }
-help_response             @(root) { response_mixin }
-domainSearch_response     @(root) { response_mixin, 
+entity_response           @{root} { response_mixin, entity_mixin }
+nameserver_response       @{root} { response_mixin, nameserer_mixin }
+domain_response           @{root} { response_mixin, domain_mixin }
+network_response          @{root} { response_mixin, network_mixin }
+autnum_response           @{root} { response_mixin, autnum_mixin }
+error_response            @{root} { response_mixin, error_mixin }
+help_response             @{root} { response_mixin }
+domainSearch_response     @{root} { response_mixin, 
                                     domainSearchResult }
-nameserverSearch_response @(root) { response_mixin, 
+nameserverSearch_response @{root} { response_mixin, 
                                     nameserverSearchResult }
-entitySearch_response     @(root) { response_mixin, 
+entitySearch_response     @{root} { response_mixin, 
                                     entitySearchResult }
 
 response_mixin (
@@ -573,7 +573,7 @@ common_mixin (
    ? status,
    ? port43,
      lang
-}
+)
 
 ;
 ; RFC 7483 Section 5.1 - Entity Object Class
@@ -598,7 +598,7 @@ entity_mixin (
 )
 
 ; See RFC 7095
-vcard @(unordered) [
+vcard @{unordered} [
      [ :"version", {}, :"text", :"4.0" ],
      [ :"fn", {}, :"text", :string ],
    * [ :string, 
