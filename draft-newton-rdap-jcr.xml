@@ -13,7 +13,7 @@
    'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.newton-json-content-rules.xml'>
 ]>
 <?rfc toc="true"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-01" ipr="trust200902">
+<rfc category="info" docName="draft-newton-rdap-jcr-02" ipr="trust200902">
     <front>
         <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
@@ -72,26 +72,35 @@
                 responses.
             </t>
             <figure>
-                <artwork xml:space="preserve">
-    entity_response           @{root} { response_mixin, 
-                                        entity_mixin           }
-    nameserver_response       @{root} { response_mixin, 
-                                        nameserer_mixin        }
-    domain_response           @{root} { response_mixin, 
-                                        domain_mixin           }
-    network_response          @{root} { response_mixin, 
-                                        network_mixin          }
-    autnum_response           @{root} { response_mixin, 
-                                        autnum_mixin           }
-    error_response            @{root} { response_mixin, 
-                                        error_mixin            }
-    help_response             @{root} { response_mixin         }
-    domainSearch_response     @{root} { response_mixin, 
-                                        domainSearchResult     }
-    nameserverSearch_response @{root} { response_mixin, 
-                                        nameserverSearchResult }
-    entitySearch_response     @{root} { response_mixin, 
-                                        entitySearchResult     }                   
+                <artwork xml:space="preserve" align="center">
+$entity_response =           @{root} { $response_mixin, 
+                                       $entity_mixin }
+
+$nameserver_response =       @{root} { $response_mixin, 
+                                       $nameserver_mixin }
+
+$domain_response =           @{root} { $response_mixin, 
+                                       $domain_mixin }
+
+$network_response =          @{root} { $response_mixin, 
+                                       $network_mixin }
+
+$autnum_response =           @{root} { $response_mixin, 
+                                       $autnum_mixin }
+
+$error_response =            @{root} { $response_mixin, 
+                                       $error_mixin }
+
+$help_response =             @{root} { $response_mixin }
+
+$domainSearch_response =     @{root} { $response_mixin, 
+                                       $domainSearchResult }
+
+$nameserverSearch_response = @{root} { $response_mixin, 
+                                       $nameserverSearchResult }
+
+$entitySearch_response =     @{root} { $response_mixin, 
+                                       $entitySearchResult }            
                 </artwork>
             </figure>
             <t>
@@ -99,12 +108,12 @@
                 by response_mixin.
             </t>
             <figure>
-                <artwork xml:space="preserve">
-    response_mixin (
-       ? rdapConformance,
-       ? "notices" notices,
-         lang
-    )     
+                <artwork xml:space="preserve" align="center">
+$response_mixin = (
+   $rdapConformance ?,
+   "notices" : $notices ?,
+   $lang
+)
                 </artwork>
             </figure>
         </section>
@@ -122,34 +131,35 @@
                     validation of jCard is beyond the scope of this document.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    entities "entities" [ * entity_oc ]
-    
-    entity_oc {
-       entity_mixin
-    }
-    
-    entity_mixin (
-         "objectClassName" : "entity",
-         common_mixin,
-       ? "vcardArray"      [ :"vcard", [ * vcard ] ]
-       ? "asEventActor"    [ * event ]
-       ? "roles"           [ * :string ],
-       ? publicIds,
-       ? entities,
-       ? "networks"        [ * network_oc ],
-       ? "autnums"         [ * autnum_oc ]
-    )
-    
-    vcard @{unordered} [
-         [ :"version", {}, :"text", :"4.0" ],
-         [ :"fn", {}, :"text", :string ],
-       * [ :string, 
-           { */.*/:any }, 
-           :"text", 
-           ( :string | [ * :string ] ) 
-         ]
-    ]
+                    <artwork xml:space="preserve" align="center">
+$entities = "entities" : [ $entity_oc * ]
+
+$entity_oc = {
+   $entity_mixin
+}
+
+$entity_mixin = (
+   "objectClassName" : "entity",
+   $common_mixin,
+   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "asEventActor"    : [ $event * ] ?,
+   "roles"           : [ string * ] ?,
+   $publicIds ?,
+   $entities ?,
+   "networks"        : [ $network_oc * ] ?,
+   "autnums"         : [ $autnum_oc * ] ?
+)
+
+$vcard = @{unordered} [
+   [ "version", {}, "text", "4.0" ],
+   [ "fn", {}, "text", string ],
+   [ string, 
+     { /.*/:any * }, 
+     "text", 
+     ( string | [ string * ] ) 
+   ] *
+]
+
                 </artwork>
                 </figure>
             </section>
@@ -158,21 +168,21 @@
                     The nameserver object class represents DNS nameservers in registries.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    nameservers "nameservers" [ * nameserver_oc ]
-    
-    nameserver_oc {
-       nameserver_mixin
-    }
-    
-    nameserver_mixin (
-         "objectClassName" : "nameserver",
-         common_mixin,
-         "ldhName"         : fqdn,
-       ? "unicodeName"     : idn,
-       ? "ipAddresses      { ? "v4" [ * ip4 ], ? "ip6" [ * ip6 ] },
-       ? entities
-    )
+                    <artwork xml:space="preserve" align="center">
+$nameservers = "nameservers" : [ $nameserver_oc * ]
+
+$nameserver_oc = {
+   $nameserver_mixin
+}
+
+$nameserver_mixin = (
+   "objectClassName" : "nameserver",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   $entities ?
+)
                 </artwork>
                 </figure>
             </section>
@@ -183,55 +193,55 @@
                     It's complexity is mostly due to the DNSSEC provisions of the object class.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    domain_oc {
-       domain_mixin
-    }
-    
-    domain_mixin (
-         "objectClassName" : "domain",
-         common_mixin,
-         "ldhName"         : fqdn,
-       ? "unicodeName"     : idn,
-       ? "variants"        [ * variant ],
-       ? nameservers,
-       ? secureDns
-    )
-    
-    variant {
-       ? "relation" [ * : string ],
-       ? "idnTable" : string,
-         "variantNames" [ * { "ldhName" : fqdn, "unicodeName" : idn } ]
-    }
-    
-    secureDNS "secureDNS" {
-       ? "zoneSigned"       : boolean,
-       ? "delegationSigned" : boolean,
-       ? "maxSigLife"       : integer,
-       ? "dsData"           [ * dsData_obj ],
-       ? "keyData"          [ * keyData_obj ],
-       ? entities,
-       ? publicIds,
-       ? "network"          network_oc
-    }
-    
-    dsData_obj {
-         "keyTag"     : integer,
-         "algorithm"  : integer,
-         "digest"     : string,
-         "digestType" : integer,
-       ? events,
-       ? links
-    }
-    
-    keyData_obj {
-         "flags"     : integer,
-         "protocol"  : integer,
-         "publicKey" : string,
-         "algorithm" : integer,
-       ? events,
-       ? links
-    }
+                    <artwork xml:space="preserve" align="center">
+$domain_oc = {
+   $domain_mixin
+}
+
+$domain_mixin = (
+   "objectClassName" : "domain",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "variants"        : [ $variant * ] ?,
+   $nameservers ?,
+   $secureDNS ?
+)
+
+$variant = {
+   "relation"     : [ string * ] ?,
+   "idnTable"     : string ?,
+   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
+}
+
+$secureDNS = "secureDNS" : {
+   "zoneSigned"       : boolean ?,
+   "delegationSigned" : boolean ?,
+   "maxSigLife"       : integer ?,
+   "dsData"           : [ $dsData_obj * ] ?,
+   "keyData"          : [ $keyData_obj * ] ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
+}
+
+$dsData_obj = {
+   "keyTag"     : integer,
+   "algorithm"  : integer,
+   "digest"     : string,
+   "digestType" : integer,
+   $events ?,
+   $links ?
+}
+
+$keyData_obj = {
+   "flags"     : integer,
+   "protocol"  : integer,
+   "publicKey" : string,
+   "algorithm" : integer,
+   $events ?,
+   $links ?
+}
                 </artwork>
                 </figure>
             </section>
@@ -240,23 +250,23 @@
                     The IP Network object class represents IP network registrations in RIRs.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    network_oc {
-       network_mixin
-    }
-    
-    network_mixin (
-         "objectClassName" : "ip network",
-         common_mixin,
-       ? "startAddress"    : ( :ip4 | :ip6 ),
-       ? "endAddres"       : ( :ip4 | :ip6 ),
-       ? "ipVersion"       : ( :"v4" | :"v6" ),
-       ? "name"            : string,
-       ? "type"            : string,
-       ? "country"         : /[A-Z]{2}/,
-       ? "parentHandle"    : string,
-       ? entities
-    )
+                    <artwork xml:space="preserve" align="center">
+$network_oc = {
+   $network_mixin
+}
+
+$network_mixin = (
+   "objectClassName" : "ip network",
+   $common_mixin,
+   "startAddress"    : ( ipv4 | ipv6 ) ?,
+   "endAddres"       : ( ipv4 | ipv6 ) ?,
+   "ipVersion"       : ( "v4" | "v6" ) ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   "country"         : /[A-Z]{2}/ ?,
+   "parentHandle"    : string ?,
+   $entities ?
+)
                 </artwork>
                 </figure>
             </section>
@@ -266,20 +276,20 @@
                     autonomous system numbers in an RIR.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    autnum_oc {
-       autnum_mixin
-    }
-    
-    autnum_mixin (
-         "objectClassName" : "autnum",
-         common_mixin,
-       ? "startAutnum"     : integer,
-       ? "endAutnum"       : integer,
-       ? "name"            : string,
-       ? "type"            : string,
-       ? "entities
-    )
+                    <artwork xml:space="preserve" align="center">
+$autnum_oc = {
+   $autnum_mixin
+}
+
+$autnum_mixin = (
+   "objectClassName" : "autnum",
+   $common_mixin,
+   "startAutnum"     : int32 ?,
+   "endAutnum"       : int32 ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   $entities ?
+)
                 </artwork>
                 </figure>
             </section>
@@ -289,10 +299,10 @@
                 Search results in RDAP are merely arrays of object classes.
             </t>
             <figure>
-                <artwork xml:space="preserve">
-    domainSearchResult     "domainSearchResult"     [ * domain_oc ]
-    nameserverSearchResult "nameserverSearchResult" [ * nameserver_oc ]
-    entitySearchResult     "entitySearchResult"     [ * entity_oc ]
+                <artwork xml:space="preserve" align="center">
+$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
+$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
+$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
                 </artwork>
             </figure>
         </section>
@@ -305,16 +315,16 @@
                 Most of these common structures are grouped together in a rule called common_mixin.
             </t>
             <figure>
-                <artwork xml:space="preserve">
-    common_mixin (
-       ? "handle"  : string
-       ? "remarks" [ * notice ],
-         links,
-       ? events,
-       ? status,
-       ? port43,
-         lang
-    )  
+                <artwork xml:space="preserve" align="center">
+$common_mixin = (
+   "handle"  : string ?,
+   "remarks" : [ $notice * ] ?,
+   $links,
+   $events ?,
+   $status ?,
+   $port43 ?,
+   $lang
+)
                 </artwork>
             </figure>
             <section title="RDAP Conformance">
@@ -323,8 +333,8 @@
                     mechanism of RDAP.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    rdapConformance "rdapConformance" [ * :string ]  
+                    <artwork xml:space="preserve" align="center">
+$rdapConformance = "rdapConformance" : [ string * ]  
                     </artwork>
                 </figure>
             </section>
@@ -340,19 +350,18 @@
                     a separate link.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    links ( ? "links" [ * link ] )
-    
-    ; see RFC 5988
-    link {
-       ? "value"    : uri,
-       ? "rel"      : string,
-         "href"     : uri,
-       ? "hreflang" [ * lang_value ],
-       ? "title"    : string,
-       ? "media"    : string,
-       ? "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/
-    }
+                    <artwork xml:space="preserve" align="center">
+$links = ( "links" : [ $link * ] ? )
+
+$link = {
+   "value"    : uri ?,
+   "rel"      : string ?,
+   "href"     : uri,
+   "hreflang" : [ $lang_value * ] ?,
+   "title"    : string ?,
+   "media"    : string ?,
+   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
+}
                     </artwork>
                 </figure>
             </section>
@@ -363,16 +372,16 @@
                     meta-data covering a specific instance of an object class.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    notices [ * notice ]
-    
-    notice {
-        ? "title"       : string,
-          "description" [ * :string ],
-        ? "type"        : string,
-          links,
-          lang
-    }
+                    <artwork xml:space="preserve" align="center">
+$notices = [ $notice * ]
+
+$notice = {
+    "title"       : string ?,
+    "description" : [ string * ],
+    "type"        : string ?,
+    $links,
+    $lang
+}
                     </artwork>
                 </figure>
             </section>
@@ -382,9 +391,9 @@
                     used in the links structures.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    lang_value : /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-    lang ( ? "lang" lang_value )
+                    <artwork xml:space="preserve" align="center">
+$lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+$lang = ( "lang" : $lang_value ? )
                     </artwork>
                 </figure>
             </section>
@@ -395,16 +404,16 @@
                     being re-used by entities embedded by other objects.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    events "events" [ * event ]
-    
-    event {
-         "eventAction" : string,
-       ? "eventActor"  : string,
-         "eventDate"   : date-time,
-         links,
-         lang
-    }
+                    <artwork xml:space="preserve" align="center">
+$events = "events" : [ $event * ]
+
+$event = {
+   "eventAction" : string,
+   "eventActor"  : string ?,
+   "eventDate"   : datetime,
+   $links,
+   $lang
+}
                     </artwork>
                 </figure>
             </section>
@@ -415,8 +424,8 @@
                     where the value of the strings are registered in an IANA registry.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    status "status" [ *: string ]                        
+                    <artwork xml:space="preserve" align="center">
+$status = "status" : [ string * ]                        
                     </artwork>
                 </figure>
             </section>
@@ -427,8 +436,8 @@
                     of the Whois service.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    port43 "port43" : string
+                    <artwork xml:space="preserve" align="center">
+$port43 = "port43" : string
                     </artwork>
                 </figure>
             </section>
@@ -439,13 +448,13 @@
                     member is an array of objects to represent these identifiers.
                 </t>
                 <figure>
-                    <artwork xml:space="preserve">
-    publicIds "publicIds" [ * publicId ]
-    
-    publicId {
-      "type"      : string,
-      "identifier": string
-    }
+                    <artwork xml:space="preserve" align="center">
+$publicIds = "publicIds" : [ $publicId * ]
+
+$publicId = {
+  "type"       : string,
+  "identifier" : string
+}
                     </artwork>
                 </figure>
             </section>
@@ -457,285 +466,300 @@
                 </preamble>
                 <artwork xml:space="preserve">
 ;
-; Response
+; The various types of responses
 ;
 
-entity_response           @{root} { response_mixin, entity_mixin }
-nameserver_response       @{root} { response_mixin, nameserer_mixin }
-domain_response           @{root} { response_mixin, domain_mixin }
-network_response          @{root} { response_mixin, network_mixin }
-autnum_response           @{root} { response_mixin, autnum_mixin }
-error_response            @{root} { response_mixin, error_mixin }
-help_response             @{root} { response_mixin }
-domainSearch_response     @{root} { response_mixin, 
-                                    domainSearchResult }
-nameserverSearch_response @{root} { response_mixin, 
-                                    nameserverSearchResult }
-entitySearch_response     @{root} { response_mixin, 
-                                    entitySearchResult }
+$entity_response =           @{root} { $response_mixin, 
+                                       $entity_mixin }
 
-response_mixin (
-   ? rdapConformance,
-   ? "notices" notices,
-     lang
+$nameserver_response =       @{root} { $response_mixin, 
+                                       $nameserver_mixin }
+
+$domain_response =           @{root} { $response_mixin, 
+                                       $domain_mixin }
+
+$network_response =          @{root} { $response_mixin, 
+                                       $network_mixin }
+
+$autnum_response =           @{root} { $response_mixin, 
+                                       $autnum_mixin }
+
+$error_response =            @{root} { $response_mixin, 
+                                       $error_mixin }
+
+$help_response =             @{root} { $response_mixin }
+
+$domainSearch_response =     @{root} { $response_mixin, 
+                                       $domainSearchResult }
+
+$nameserverSearch_response = @{root} { $response_mixin, 
+                                       $nameserverSearchResult }
+
+$entitySearch_response =     @{root} { $response_mixin, 
+                                       $entitySearchResult }
+
+$response_mixin = (
+   $rdapConformance ?,
+   "notices" : $notices ?,
+   $lang
 )
 
 ;
 ; RFC 7483 Section 4.1 - RDAP Conformance                   
 ;
 
-rdapConformance "rdapConformance" [ * :string ]
+$rdapConformance = "rdapConformance" : [ string * ]
 
 ;
 ; RFC 7483 Section 4.2 - Links
 ;
 
-links ( ? "links" [ * link ] )
+$links = ( "links" : [ $link * ] ? )
 
 ; see RFC 5988
-link {
-   ? "value"    : uri,
-   ? "rel"      : string,
-     "href"     : uri,
-   ? "hreflang" [ * lang_value ],
-   ? "title"    : string,
-   ? "media"    : string,
-   ? "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/
+$link = {
+   "value"    : uri ?,
+   "rel"      : string ?,
+   "href"     : uri,
+   "hreflang" : [ $lang_value * ] ?,
+   "title"    : string ?,
+   "media"    : string ?,
+   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
 }
 
 ;
 ; RFC 7483 Section 4.3 - Notices
 ;
 
-notices [ * notice ]
+$notices = [ $notice * ]
 
-notice {
-    ? "title"       : string,
-      "description" [ * :string ],
-    ? "type"        : string,
-      links,
-      lang
+$notice = {
+    "title"       : string ?,
+    "description" : [ string * ],
+    "type"        : string ?,
+    $links,
+    $lang
 }
 
 ;
 ; RFC 7483 Section 4.4 - Language Identifier
 ;
 
-lang_value : /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-lang ( ? "lang" lang_value )
+$lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+$lang = ( "lang" : $lang_value ? )
 
 ;
 ; RFC 7483 Section 4.5 - Events
 ;
 
-events "events" [ * event ]
+$events = "events" : [ $event * ]
 
-event {
-     "eventAction" : string,
-   ? "eventActor"  : string,
-     "eventDate"   : date-time,
-     links,
-     lang
+$event = {
+   "eventAction" : string,
+   "eventActor"  : string ?,
+   "eventDate"   : datetime,
+   $links,
+   $lang
 }
 
 ;
 ; RFC 7483 Section 4.6 - Status
 ;
 
-status "status" [ *: string ]
+$status = "status" : [ string * ]
 
 ;
 ; RFC 7483 Section 4.7 - Port43
 ;
 
-port43 "port43" : string
+$port43 = "port43" : string
 
 ;
 ; RFC 7482 Section 4.8 - Public Ids
 ;
 
-publicIds "publicIds" [ * publicId ]
+$publicIds = "publicIds" : [ $publicId * ]
 
-publicId {
-  "type"      : string,
-  "identifier": string
+$publicId = {
+  "type"       : string,
+  "identifier" : string
 }
 
 ;
 ; Common Object Class Structures
 ;
 
-common_mixin (
-   ? "handle"  : string
-   ? "remarks" [ * notice ],
-     links,
-   ? events,
-   ? status,
-   ? port43,
-     lang
+$common_mixin = (
+   "handle"  : string ?,
+   "remarks" : [ $notice * ] ?,
+   $links,
+   $events ?,
+   $status ?,
+   $port43 ?,
+   $lang
 )
 
 ;
 ; RFC 7483 Section 5.1 - Entity Object Class
 ;
 
-entities "entities" [ * entity_oc ]
+$entities = "entities" : [ $entity_oc * ]
 
-entity_oc {
-   entity_mixin
+$entity_oc = {
+   $entity_mixin
 }
 
-entity_mixin (
-     "objectClassName" : "entity",
-     common_mixin,
-   ? "vcardArray"      [ :"vcard", [ * vcard ] ]
-   ? "asEventActor"    [ * event ]
-   ? "roles"           [ * :string ],
-   ? publicIds,
-   ? entities,
-   ? "networks"        [ * network_oc ],
-   ? "autnums"         [ * autnum_oc ]
+$entity_mixin = (
+   "objectClassName" : "entity",
+   $common_mixin,
+   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "asEventActor"    : [ $event * ] ?,
+   "roles"           : [ string * ] ?,
+   $publicIds ?,
+   $entities ?,
+   "networks"        : [ $network_oc * ] ?,
+   "autnums"         : [ $autnum_oc * ] ?
 )
 
 ; See RFC 7095
-vcard @{unordered} [
-     [ :"version", {}, :"text", :"4.0" ],
-     [ :"fn", {}, :"text", :string ],
-   * [ :string, 
-       { */.*/:any }, 
-       :"text", 
-       ( :string | [ * :string ] ) 
-     ]
+$vcard = @{unordered} [
+   [ "version", {}, "text", "4.0" ],
+   [ "fn", {}, "text", string ],
+   [ string, 
+     { /.*/:any * }, 
+     "text", 
+     ( string | [ string * ] ) 
+   ] *
 ]
 
 ;
 ; RFC 7483 Section 5.2 - Nameserver Object Class
 ;
 
-nameservers "nameservers" [ * nameserver_oc ]
+$nameservers = "nameservers" : [ $nameserver_oc * ]
 
-nameserver_oc {
-   nameserver_mixin
+$nameserver_oc = {
+   $nameserver_mixin
 }
 
-nameserver_mixin (
-     "objectClassName" : "nameserver",
-     common_mixin,
-     "ldhName"         : fqdn,
-   ? "unicodeName"     : idn,
-   ? "ipAddresses      { ? "v4" [ * ip4 ], ? "ip6" [ * ip6 ] },
-   ? entities
+$nameserver_mixin = (
+   "objectClassName" : "nameserver",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   $entities ?
 )
 
 ;
 ; RFC 7483 Section 5.3 - Domain Object Class
 ;
 
-domain_oc {
-   domain_mixin
+$domain_oc = {
+   $domain_mixin
 }
 
-domain_mixin (
-     "objectClassName" : "domain",
-     common_mixin,
-     "ldhName"         : fqdn,
-   ? "unicodeName"     : idn,
-   ? "variants"        [ * variant ],
-   ? nameservers,
-   ? secureDns
+$domain_mixin = (
+   "objectClassName" : "domain",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "variants"        : [ $variant * ] ?,
+   $nameservers ?,
+   $secureDNS ?
 )
 
-variant {
-   ? "relation" [ * : string ],
-   ? "idnTable" : string,
-     "variantNames" [ * { "ldhName" : fqdn, "unicodeName" : idn } ]
+$variant = {
+   "relation"     : [ string * ] ?,
+   "idnTable"     : string ?,
+   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
 }
 
-secureDNS "secureDNS" {
-   ? "zoneSigned"       : boolean,
-   ? "delegationSigned" : boolean,
-   ? "maxSigLife"       : integer,
-   ? "dsData"           [ * dsData_obj ],
-   ? "keyData"          [ * keyData_obj ],
-   ? entities,
-   ? publicIds,
-   ? "network"          network_oc
+$secureDNS = "secureDNS" : {
+   "zoneSigned"       : boolean ?,
+   "delegationSigned" : boolean ?,
+   "maxSigLife"       : integer ?,
+   "dsData"           : [ $dsData_obj * ] ?,
+   "keyData"          : [ $keyData_obj * ] ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
 }
 
-dsData_obj {
-     "keyTag"     : integer,
-     "algorithm"  : integer,
-     "digest"     : string,
-     "digestType" : integer,
-   ? events,
-   ? links
+$dsData_obj = {
+   "keyTag"     : integer,
+   "algorithm"  : integer,
+   "digest"     : string,
+   "digestType" : integer,
+   $events ?,
+   $links ?
 }
 
-keyData_obj {
-     "flags"     : integer,
-     "protocol"  : integer,
-     "publicKey" : string,
-     "algorithm" : integer,
-   ? events,
-   ? links
+$keyData_obj = {
+   "flags"     : integer,
+   "protocol"  : integer,
+   "publicKey" : string,
+   "algorithm" : integer,
+   $events ?,
+   $links ?
 }
 
 ;
 ; RFC 7483 Section 5.4 - IP Network Object Class
 ;
 
-network_oc {
-   network_mixin
+$network_oc = {
+   $network_mixin
 }
 
-network_mixin (
-     "objectClassName" : "ip network",
-     common_mixin,
-   ? "startAddress"    : ( :ip4 | :ip6 ),
-   ? "endAddres"       : ( :ip4 | :ip6 ),
-   ? "ipVersion"       : ( :"v4" | :"v6" ),
-   ? "name"            : string,
-   ? "type"            : string,
-   ? "country"         : /[A-Z]{2}/,
-   ? "parentHandle"    : string,
-   ? entities
+$network_mixin = (
+   "objectClassName" : "ip network",
+   $common_mixin,
+   "startAddress"    : ( ipv4 | ipv6 ) ?,
+   "endAddres"       : ( ipv4 | ipv6 ) ?,
+   "ipVersion"       : ( "v4" | "v6" ) ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   "country"         : /[A-Z]{2}/ ?,
+   "parentHandle"    : string ?,
+   $entities ?
 )
 
 ;
 ; RFC 7483 Section 5.5 - Autnum Object Class
 ;
 
-autnum_oc {
-   autnum_mixin
+$autnum_oc = {
+   $autnum_mixin
 }
 
-autnum_mixin (
-     "objectClassName" : "autnum",
-     common_mixin,
-   ? "startAutnum"     : integer,
-   ? "endAutnum"       : integer,
-   ? "name"            : string,
-   ? "type"            : string,
-   ? "entities
+$autnum_mixin = (
+   "objectClassName" : "autnum",
+   $common_mixin,
+   "startAutnum"     : int32 ?,
+   "endAutnum"       : int32 ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   $entities ?
 )
 
 ;
 ; RFC 7483 Section 6 - Error
 ;
 
-error_mixin (
-     "errorCode"   : integer,
-   ? "title"       : string,
-   ? "description" [ * : string ]   
+$error_mixin = (
+   "errorCode"   : integer,
+   "title"       : string ?, 
+   "description" : [ string * ] ?
 )
 
 ;
 ; RFC 7483 Section 8 - Search Results
 ;
 
-domainSearchResult     "domainSearchResult"     [ * domain_oc ]
-nameserverSearchResult "nameserverSearchResult" [ * nameserver_oc ]
-entitySearchResult     "entitySearchResult"     [ * entity_oc ]
+$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
+$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
+$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
 
                 </artwork>
             </figure>
