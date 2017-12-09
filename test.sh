@@ -49,6 +49,12 @@ do
   assert_raises "jcr -r jcr/rdap.jcr -S error_response $good_json" 0
 done
 
+# help
+for good_json in json/good/help_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -S help_response $good_json" 0
+done
+
 #
 # Bad JSON
 #

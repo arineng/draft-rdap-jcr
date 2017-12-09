@@ -1,0 +1,25 @@
+{
+  "rdapConformance" :
+  [
+    "rdap_level_0"
+  ],
+  "notices" :
+  [
+    {
+      "title" : "Authentication Policy",
+      "description" :
+      [
+        "Access to sensitive data for users with proper credentials."
+      ],
+      "links" :
+      [
+        {
+          "value" : "http://example.net/help",
+          "rel" : "alternate",
+          "type" : "text/html",
+          "href" : "http://www.example.com/auth_policy.html"
+        }
+      ]
+    }
+  ]
+}
