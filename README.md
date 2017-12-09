@@ -12,6 +12,18 @@ and should be installed as a Ruby gem.
     gem install jcrvalidator
 
 
+# Testing RDAP JSON
+
+To test JSON files, you will need the JCRValidator (see above). The JSON files are broken up
+into files which do validate and those which do not. Inside the `good` and `bad` directories,
+the files are categorized by response type.
+
+To run the tests, simply invoke the `test.sh` script.
+
+If you wish to add files, simply drop them into the appropriate directory. If the directory
+does not exist, create it according to the scheme and extend the `test.sh` script to cover
+the directory (that should mostly be a matter cut-n-paste).
+
 # Building the JCR Parts
 
 The Internet Draft discusses the JCR in sections to make it readable. This is done by breaking
