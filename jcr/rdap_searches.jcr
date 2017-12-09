@@ -1,0 +1,3 @@
+$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
+$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
+$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]

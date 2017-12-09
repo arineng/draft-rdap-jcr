@@ -1,0 +1,1 @@
+$rdapConformance = "rdapConformance" : [ string * ]

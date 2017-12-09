@@ -1,0 +1,13 @@
+$autnum_oc = {
+   $autnum_mixin
+}
+
+$autnum_mixin = (
+   "objectClassName" : "autnum",
+   $common_mixin,
+   "startAutnum"     : int32 ?,
+   "endAutnum"       : int32 ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   $entities ?
+)

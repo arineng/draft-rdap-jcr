@@ -1,3 +1,10 @@
+; all_parts rdap_all.jcr
+;
+; JSON Content Rules (JCR) for the Registry Data Access Protocol (RDAP)
+; Specified in RFC 7483
+;
+
+; start_part rdap_roots.jcr
 ;
 ; The various types of responses
 ;
@@ -30,23 +37,28 @@ $nameserverSearch_response = @{root} { $response_mixin,
 
 $entitySearch_response =     @{root} { $response_mixin, 
                                        $entitySearchResult }
-
+; end_part
+; start_part rdap_response_mixin.jcr
 $response_mixin = (
    $rdapConformance ?,
    "notices" : $notices ?,
    $lang
 )
+; end_part
 
 ;
 ; RFC 7483 Section 4.1 - RDAP Conformance                   
 ;
 
+; start_part rdap_conformance.jcr
 $rdapConformance = "rdapConformance" : [ string * ]
+; end_part
 
 ;
 ; RFC 7483 Section 4.2 - Links
 ;
 
+; start_part rdap_links.jcr
 $links = ( "links" : [ $link * ] ? )
 
 ; see RFC 5988
@@ -59,11 +71,13 @@ $link = {
    "media"    : string ?,
    "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
 }
+; end_part
 
 ;
 ; RFC 7483 Section 4.3 - Notices
 ;
 
+; start_part rdap_notices.jcr
 $notices = [ $notice * ]
 
 $notice = {
@@ -73,18 +87,22 @@ $notice = {
     $links,
     $lang
 }
+; end_part
 
 ;
 ; RFC 7483 Section 4.4 - Language Identifier
 ;
 
+; start_part rdap_language.jcr
 $lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
 $lang = ( "lang" : $lang_value ? )
+; end_part
 
 ;
 ; RFC 7483 Section 4.5 - Events
 ;
 
+; start_part rdap_events.jcr
 $events = "events" : [ $event * ]
 
 $event = {
@@ -94,34 +112,42 @@ $event = {
    $links,
    $lang
 }
+; end_part
 
 ;
 ; RFC 7483 Section 4.6 - Status
 ;
 
+; start_part rdap_status.jcr
 $status = "status" : [ string * ]
+; end_part
 
 ;
 ; RFC 7483 Section 4.7 - Port43
 ;
 
+; start_part rdap_port.jcr
 $port43 = "port43" : string
+; end_part
 
 ;
 ; RFC 7482 Section 4.8 - Public Ids
 ;
 
+; start_part rdap_publicids.jcr
 $publicIds = "publicIds" : [ $publicId * ]
 
 $publicId = {
   "type"       : string,
   "identifier" : string
 }
+; end_part
 
 ;
 ; Common Object Class Structures
 ;
 
+; start_part rdap_common_mixin.jcr
 $common_mixin = (
    "handle"  : string ?,
    "remarks" : [ $notice * ] ?,
@@ -131,11 +157,13 @@ $common_mixin = (
    $port43 ?,
    $lang
 )
+; end_part
 
 ;
 ; RFC 7483 Section 5.1 - Entity Object Class
 ;
 
+; start_part rdap_entity.jcr
 $entities = "entities" : [ $entity_oc * ]
 
 $entity_oc = {
@@ -164,11 +192,13 @@ $vcard = @{unordered} [
      ( string | [ string * ] ) 
    ] *
 ]
+; end_part
 
 ;
 ; RFC 7483 Section 5.2 - Nameserver Object Class
 ;
 
+; start_part rdap_nameserver.jcr
 $nameservers = "nameservers" : [ $nameserver_oc * ]
 
 $nameserver_oc = {
@@ -183,11 +213,13 @@ $nameserver_mixin = (
    "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
    $entities ?
 )
+; end_part
 
 ;
 ; RFC 7483 Section 5.3 - Domain Object Class
 ;
 
+; start_part rdap_domain.jcr
 $domain_oc = {
    $domain_mixin
 }
@@ -236,11 +268,13 @@ $keyData_obj = {
    $events ?,
    $links ?
 }
+; end_part
 
 ;
 ; RFC 7483 Section 5.4 - IP Network Object Class
 ;
 
+; start_part rdap_network.jcr
 $network_oc = {
    $network_mixin
 }
@@ -257,11 +291,13 @@ $network_mixin = (
    "parentHandle"    : string ?,
    $entities ?
 )
+; end_part
 
 ;
 ; RFC 7483 Section 5.5 - Autnum Object Class
 ;
 
+; start_part rdap_autnum.jcr
 $autnum_oc = {
    $autnum_mixin
 }
@@ -275,6 +311,7 @@ $autnum_mixin = (
    "type"            : string ?,
    $entities ?
 )
+; end_part
 
 ;
 ; RFC 7483 Section 6 - Error
@@ -290,6 +327,8 @@ $error_mixin = (
 ; RFC 7483 Section 8 - Search Results
 ;
 
+; start_part rdap_searches.jcr
 $domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
 $nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
 $entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
+; end_part

@@ -1,0 +1,28 @@
+$entities = "entities" : [ $entity_oc * ]
+
+$entity_oc = {
+   $entity_mixin
+}
+
+$entity_mixin = (
+   "objectClassName" : "entity",
+   $common_mixin,
+   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "asEventActor"    : [ $event * ] ?,
+   "roles"           : [ string * ] ?,
+   $publicIds ?,
+   $entities ?,
+   "networks"        : [ $network_oc * ] ?,
+   "autnums"         : [ $autnum_oc * ] ?
+)
+
+; See RFC 7095
+$vcard = @{unordered} [
+   [ "version", {}, "text", "4.0" ],
+   [ "fn", {}, "text", string ],
+   [ string, 
+     { /.*/:any * }, 
+     "text", 
+     ( string | [ string * ] ) 
+   ] *
+]

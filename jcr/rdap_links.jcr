@@ -1,0 +1,12 @@
+$links = ( "links" : [ $link * ] ? )
+
+; see RFC 5988
+$link = {
+   "value"    : uri ?,
+   "rel"      : string ?,
+   "href"     : uri,
+   "hreflang" : [ $lang_value * ] ?,
+   "title"    : string ?,
+   "media"    : string ?,
+   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
+}

@@ -1,0 +1,16 @@
+$network_oc = {
+   $network_mixin
+}
+
+$network_mixin = (
+   "objectClassName" : "ip network",
+   $common_mixin,
+   "startAddress"    : ( ipv4 | ipv6 ) ?,
+   "endAddres"       : ( ipv4 | ipv6 ) ?,
+   "ipVersion"       : ( "v4" | "v6" ) ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   "country"         : /[A-Z]{2}/ ?,
+   "parentHandle"    : string ?,
+   $entities ?
+)

@@ -1,0 +1,14 @@
+$nameservers = "nameservers" : [ $nameserver_oc * ]
+
+$nameserver_oc = {
+   $nameserver_mixin
+}
+
+$nameserver_mixin = (
+   "objectClassName" : "nameserver",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   $entities ?
+)

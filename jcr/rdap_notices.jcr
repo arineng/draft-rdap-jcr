@@ -1,0 +1,9 @@
+$notices = [ $notice * ]
+
+$notice = {
+    "title"       : string ?,
+    "description" : [ string * ],
+    "type"        : string ?,
+    $links,
+    $lang
+}

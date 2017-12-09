@@ -1,0 +1,32 @@
+;
+; The various types of responses
+;
+
+$entity_response =           @{root} { $response_mixin, 
+                                       $entity_mixin }
+
+$nameserver_response =       @{root} { $response_mixin, 
+                                       $nameserver_mixin }
+
+$domain_response =           @{root} { $response_mixin, 
+                                       $domain_mixin }
+
+$network_response =          @{root} { $response_mixin, 
+                                       $network_mixin }
+
+$autnum_response =           @{root} { $response_mixin, 
+                                       $autnum_mixin }
+
+$error_response =            @{root} { $response_mixin, 
+                                       $error_mixin }
+
+$help_response =             @{root} { $response_mixin }
+
+$domainSearch_response =     @{root} { $response_mixin, 
+                                       $domainSearchResult }
+
+$nameserverSearch_response = @{root} { $response_mixin, 
+                                       $nameserverSearchResult }
+
+$entitySearch_response =     @{root} { $response_mixin, 
+                                       $entitySearchResult }

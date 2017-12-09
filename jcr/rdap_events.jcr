@@ -1,0 +1,9 @@
+$events = "events" : [ $event * ]
+
+$event = {
+   "eventAction" : string,
+   "eventActor"  : string ?,
+   "eventDate"   : datetime,
+   $links,
+   $lang
+}

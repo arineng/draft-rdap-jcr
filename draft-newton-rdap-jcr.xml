@@ -11,9 +11,28 @@
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7483.xml'>
 <!ENTITY I-D.newton-json-content-rules PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.newton-json-content-rules.xml'>
+
+<!ENTITY rdap_all PUBLIC '' 'jcr/rdap_all.jcr'>
+<!ENTITY rdap_autnum PUBLIC '' 'jcr/rdap_autnum.jcr'>
+<!ENTITY rdap_common_mixin PUBLIC '' 'jcr/rdap_common_mixin.jcr' >
+<!ENTITY rdap_conformance PUBLIC '' 'jcr/rdap_conformance.jcr' >
+<!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr' >
+<!ENTITY rdap_entity PUBLIC '' 'jcr/rdap_entity.jcr' >
+<!ENTITY rdap_events PUBLIC '' 'jcr/rdap_events.jcr' >
+<!ENTITY rdap_language PUBLIC '' 'jcr/rdap_language.jcr' >
+<!ENTITY rdap_links PUBLIC '' 'jcr/rdap_links.jcr' >
+<!ENTITY rdap_nameserver PUBLIC '' 'jcr/rdap_nameserver.jcr' >
+<!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr' >
+<!ENTITY rdap_notices PUBLIC '' 'jcr/rdap_notices.jcr' >
+<!ENTITY rdap_port PUBLIC '' 'jcr/rdap_port.jcr' >
+<!ENTITY rdap_publicids PUBLIC '' 'jcr/rdap_publicids.jcr' >
+<!ENTITY rdap_response_mixin PUBLIC '' 'jcr/rdap_response_mixin.jcr' >
+<!ENTITY rdap_roots PUBLIC '' 'jcr/rdap_roots.jcr' >
+<!ENTITY rdap_searches PUBLIC '' 'jcr/rdap_searches.jcr' >
+<!ENTITY rdap_status PUBLIC '' 'jcr/rdap_status.jcr' >
 ]>
 <?rfc toc="true"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-02" ipr="trust200902">
+<rfc category="info" docName="draft-newton-rdap-jcr-03" ipr="trust200902">
     <front>
         <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
@@ -73,34 +92,7 @@
             </t>
             <figure>
                 <artwork xml:space="preserve" align="center">
-$entity_response =           @{root} { $response_mixin, 
-                                       $entity_mixin }
-
-$nameserver_response =       @{root} { $response_mixin, 
-                                       $nameserver_mixin }
-
-$domain_response =           @{root} { $response_mixin, 
-                                       $domain_mixin }
-
-$network_response =          @{root} { $response_mixin, 
-                                       $network_mixin }
-
-$autnum_response =           @{root} { $response_mixin, 
-                                       $autnum_mixin }
-
-$error_response =            @{root} { $response_mixin, 
-                                       $error_mixin }
-
-$help_response =             @{root} { $response_mixin }
-
-$domainSearch_response =     @{root} { $response_mixin, 
-                                       $domainSearchResult }
-
-$nameserverSearch_response = @{root} { $response_mixin, 
-                                       $nameserverSearchResult }
-
-$entitySearch_response =     @{root} { $response_mixin, 
-                                       $entitySearchResult }            
+&rdap_roots;
                 </artwork>
             </figure>
             <t>
@@ -109,11 +101,7 @@ $entitySearch_response =     @{root} { $response_mixin,
             </t>
             <figure>
                 <artwork xml:space="preserve" align="center">
-$response_mixin = (
-   $rdapConformance ?,
-   "notices" : $notices ?,
-   $lang
-)
+&rdap_response_mixin;
                 </artwork>
             </figure>
         </section>
@@ -132,34 +120,7 @@ $response_mixin = (
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$entities = "entities" : [ $entity_oc * ]
-
-$entity_oc = {
-   $entity_mixin
-}
-
-$entity_mixin = (
-   "objectClassName" : "entity",
-   $common_mixin,
-   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
-   "asEventActor"    : [ $event * ] ?,
-   "roles"           : [ string * ] ?,
-   $publicIds ?,
-   $entities ?,
-   "networks"        : [ $network_oc * ] ?,
-   "autnums"         : [ $autnum_oc * ] ?
-)
-
-$vcard = @{unordered} [
-   [ "version", {}, "text", "4.0" ],
-   [ "fn", {}, "text", string ],
-   [ string, 
-     { /.*/:any * }, 
-     "text", 
-     ( string | [ string * ] ) 
-   ] *
-]
-
+&rdap_entity;
                 </artwork>
                 </figure>
             </section>
@@ -169,20 +130,7 @@ $vcard = @{unordered} [
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$nameservers = "nameservers" : [ $nameserver_oc * ]
-
-$nameserver_oc = {
-   $nameserver_mixin
-}
-
-$nameserver_mixin = (
-   "objectClassName" : "nameserver",
-   $common_mixin,
-   "ldhName"         : fqdn,
-   "unicodeName"     : idn ?,
-   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
-   $entities ?
-)
+&rdap_nameserver;
                 </artwork>
                 </figure>
             </section>
@@ -194,54 +142,7 @@ $nameserver_mixin = (
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$domain_oc = {
-   $domain_mixin
-}
-
-$domain_mixin = (
-   "objectClassName" : "domain",
-   $common_mixin,
-   "ldhName"         : fqdn,
-   "unicodeName"     : idn ?,
-   "variants"        : [ $variant * ] ?,
-   $nameservers ?,
-   $secureDNS ?
-)
-
-$variant = {
-   "relation"     : [ string * ] ?,
-   "idnTable"     : string ?,
-   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
-}
-
-$secureDNS = "secureDNS" : {
-   "zoneSigned"       : boolean ?,
-   "delegationSigned" : boolean ?,
-   "maxSigLife"       : integer ?,
-   "dsData"           : [ $dsData_obj * ] ?,
-   "keyData"          : [ $keyData_obj * ] ?,
-   $entities ?,
-   $publicIds ?,
-   "network"          : $network_oc ?
-}
-
-$dsData_obj = {
-   "keyTag"     : integer,
-   "algorithm"  : integer,
-   "digest"     : string,
-   "digestType" : integer,
-   $events ?,
-   $links ?
-}
-
-$keyData_obj = {
-   "flags"     : integer,
-   "protocol"  : integer,
-   "publicKey" : string,
-   "algorithm" : integer,
-   $events ?,
-   $links ?
-}
+&rdap_domain;
                 </artwork>
                 </figure>
             </section>
@@ -251,22 +152,7 @@ $keyData_obj = {
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$network_oc = {
-   $network_mixin
-}
-
-$network_mixin = (
-   "objectClassName" : "ip network",
-   $common_mixin,
-   "startAddress"    : ( ipv4 | ipv6 ) ?,
-   "endAddres"       : ( ipv4 | ipv6 ) ?,
-   "ipVersion"       : ( "v4" | "v6" ) ?,
-   "name"            : string ?,
-   "type"            : string ?,
-   "country"         : /[A-Z]{2}/ ?,
-   "parentHandle"    : string ?,
-   $entities ?
-)
+&rdap_network;
                 </artwork>
                 </figure>
             </section>
@@ -277,19 +163,7 @@ $network_mixin = (
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$autnum_oc = {
-   $autnum_mixin
-}
-
-$autnum_mixin = (
-   "objectClassName" : "autnum",
-   $common_mixin,
-   "startAutnum"     : int32 ?,
-   "endAutnum"       : int32 ?,
-   "name"            : string ?,
-   "type"            : string ?,
-   $entities ?
-)
+&rdap_autnum;
                 </artwork>
                 </figure>
             </section>
@@ -300,9 +174,7 @@ $autnum_mixin = (
             </t>
             <figure>
                 <artwork xml:space="preserve" align="center">
-$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
-$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
-$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
+&rdap_searches;
                 </artwork>
             </figure>
         </section>
@@ -316,15 +188,7 @@ $entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
             </t>
             <figure>
                 <artwork xml:space="preserve" align="center">
-$common_mixin = (
-   "handle"  : string ?,
-   "remarks" : [ $notice * ] ?,
-   $links,
-   $events ?,
-   $status ?,
-   $port43 ?,
-   $lang
-)
+&rdap_common_mixin;
                 </artwork>
             </figure>
             <section title="RDAP Conformance">
@@ -334,7 +198,7 @@ $common_mixin = (
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$rdapConformance = "rdapConformance" : [ string * ]  
+&rdap_conformance;
                     </artwork>
                 </figure>
             </section>
@@ -351,17 +215,7 @@ $rdapConformance = "rdapConformance" : [ string * ]
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$links = ( "links" : [ $link * ] ? )
-
-$link = {
-   "value"    : uri ?,
-   "rel"      : string ?,
-   "href"     : uri,
-   "hreflang" : [ $lang_value * ] ?,
-   "title"    : string ?,
-   "media"    : string ?,
-   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
-}
+&rdap_links;
                     </artwork>
                 </figure>
             </section>
@@ -373,15 +227,7 @@ $link = {
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$notices = [ $notice * ]
-
-$notice = {
-    "title"       : string ?,
-    "description" : [ string * ],
-    "type"        : string ?,
-    $links,
-    $lang
-}
+&rdap_notices;
                     </artwork>
                 </figure>
             </section>
@@ -392,8 +238,7 @@ $notice = {
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-$lang = ( "lang" : $lang_value ? )
+&rdap_language;
                     </artwork>
                 </figure>
             </section>
@@ -405,15 +250,7 @@ $lang = ( "lang" : $lang_value ? )
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$events = "events" : [ $event * ]
-
-$event = {
-   "eventAction" : string,
-   "eventActor"  : string ?,
-   "eventDate"   : datetime,
-   $links,
-   $lang
-}
+&rdap_events;
                     </artwork>
                 </figure>
             </section>
@@ -425,7 +262,7 @@ $event = {
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$status = "status" : [ string * ]                        
+&rdap_status;
                     </artwork>
                 </figure>
             </section>
@@ -437,7 +274,7 @@ $status = "status" : [ string * ]
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$port43 = "port43" : string
+&rdap_port;
                     </artwork>
                 </figure>
             </section>
@@ -449,12 +286,7 @@ $port43 = "port43" : string
                 </t>
                 <figure>
                     <artwork xml:space="preserve" align="center">
-$publicIds = "publicIds" : [ $publicId * ]
-
-$publicId = {
-  "type"       : string,
-  "identifier" : string
-}
+&rdap_publicids;
                     </artwork>
                 </figure>
             </section>
@@ -465,302 +297,7 @@ $publicId = {
                     The following is the complete ruleset of JSON Content Rules for RDAP.
                 </preamble>
                 <artwork xml:space="preserve">
-;
-; The various types of responses
-;
-
-$entity_response =           @{root} { $response_mixin, 
-                                       $entity_mixin }
-
-$nameserver_response =       @{root} { $response_mixin, 
-                                       $nameserver_mixin }
-
-$domain_response =           @{root} { $response_mixin, 
-                                       $domain_mixin }
-
-$network_response =          @{root} { $response_mixin, 
-                                       $network_mixin }
-
-$autnum_response =           @{root} { $response_mixin, 
-                                       $autnum_mixin }
-
-$error_response =            @{root} { $response_mixin, 
-                                       $error_mixin }
-
-$help_response =             @{root} { $response_mixin }
-
-$domainSearch_response =     @{root} { $response_mixin, 
-                                       $domainSearchResult }
-
-$nameserverSearch_response = @{root} { $response_mixin, 
-                                       $nameserverSearchResult }
-
-$entitySearch_response =     @{root} { $response_mixin, 
-                                       $entitySearchResult }
-
-$response_mixin = (
-   $rdapConformance ?,
-   "notices" : $notices ?,
-   $lang
-)
-
-;
-; RFC 7483 Section 4.1 - RDAP Conformance                   
-;
-
-$rdapConformance = "rdapConformance" : [ string * ]
-
-;
-; RFC 7483 Section 4.2 - Links
-;
-
-$links = ( "links" : [ $link * ] ? )
-
-; see RFC 5988
-$link = {
-   "value"    : uri ?,
-   "rel"      : string ?,
-   "href"     : uri,
-   "hreflang" : [ $lang_value * ] ?,
-   "title"    : string ?,
-   "media"    : string ?,
-   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
-}
-
-;
-; RFC 7483 Section 4.3 - Notices
-;
-
-$notices = [ $notice * ]
-
-$notice = {
-    "title"       : string ?,
-    "description" : [ string * ],
-    "type"        : string ?,
-    $links,
-    $lang
-}
-
-;
-; RFC 7483 Section 4.4 - Language Identifier
-;
-
-$lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-$lang = ( "lang" : $lang_value ? )
-
-;
-; RFC 7483 Section 4.5 - Events
-;
-
-$events = "events" : [ $event * ]
-
-$event = {
-   "eventAction" : string,
-   "eventActor"  : string ?,
-   "eventDate"   : datetime,
-   $links,
-   $lang
-}
-
-;
-; RFC 7483 Section 4.6 - Status
-;
-
-$status = "status" : [ string * ]
-
-;
-; RFC 7483 Section 4.7 - Port43
-;
-
-$port43 = "port43" : string
-
-;
-; RFC 7482 Section 4.8 - Public Ids
-;
-
-$publicIds = "publicIds" : [ $publicId * ]
-
-$publicId = {
-  "type"       : string,
-  "identifier" : string
-}
-
-;
-; Common Object Class Structures
-;
-
-$common_mixin = (
-   "handle"  : string ?,
-   "remarks" : [ $notice * ] ?,
-   $links,
-   $events ?,
-   $status ?,
-   $port43 ?,
-   $lang
-)
-
-;
-; RFC 7483 Section 5.1 - Entity Object Class
-;
-
-$entities = "entities" : [ $entity_oc * ]
-
-$entity_oc = {
-   $entity_mixin
-}
-
-$entity_mixin = (
-   "objectClassName" : "entity",
-   $common_mixin,
-   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
-   "asEventActor"    : [ $event * ] ?,
-   "roles"           : [ string * ] ?,
-   $publicIds ?,
-   $entities ?,
-   "networks"        : [ $network_oc * ] ?,
-   "autnums"         : [ $autnum_oc * ] ?
-)
-
-; See RFC 7095
-$vcard = @{unordered} [
-   [ "version", {}, "text", "4.0" ],
-   [ "fn", {}, "text", string ],
-   [ string, 
-     { /.*/:any * }, 
-     "text", 
-     ( string | [ string * ] ) 
-   ] *
-]
-
-;
-; RFC 7483 Section 5.2 - Nameserver Object Class
-;
-
-$nameservers = "nameservers" : [ $nameserver_oc * ]
-
-$nameserver_oc = {
-   $nameserver_mixin
-}
-
-$nameserver_mixin = (
-   "objectClassName" : "nameserver",
-   $common_mixin,
-   "ldhName"         : fqdn,
-   "unicodeName"     : idn ?,
-   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
-   $entities ?
-)
-
-;
-; RFC 7483 Section 5.3 - Domain Object Class
-;
-
-$domain_oc = {
-   $domain_mixin
-}
-
-$domain_mixin = (
-   "objectClassName" : "domain",
-   $common_mixin,
-   "ldhName"         : fqdn,
-   "unicodeName"     : idn ?,
-   "variants"        : [ $variant * ] ?,
-   $nameservers ?,
-   $secureDNS ?
-)
-
-$variant = {
-   "relation"     : [ string * ] ?,
-   "idnTable"     : string ?,
-   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
-}
-
-$secureDNS = "secureDNS" : {
-   "zoneSigned"       : boolean ?,
-   "delegationSigned" : boolean ?,
-   "maxSigLife"       : integer ?,
-   "dsData"           : [ $dsData_obj * ] ?,
-   "keyData"          : [ $keyData_obj * ] ?,
-   $entities ?,
-   $publicIds ?,
-   "network"          : $network_oc ?
-}
-
-$dsData_obj = {
-   "keyTag"     : integer,
-   "algorithm"  : integer,
-   "digest"     : string,
-   "digestType" : integer,
-   $events ?,
-   $links ?
-}
-
-$keyData_obj = {
-   "flags"     : integer,
-   "protocol"  : integer,
-   "publicKey" : string,
-   "algorithm" : integer,
-   $events ?,
-   $links ?
-}
-
-;
-; RFC 7483 Section 5.4 - IP Network Object Class
-;
-
-$network_oc = {
-   $network_mixin
-}
-
-$network_mixin = (
-   "objectClassName" : "ip network",
-   $common_mixin,
-   "startAddress"    : ( ipv4 | ipv6 ) ?,
-   "endAddres"       : ( ipv4 | ipv6 ) ?,
-   "ipVersion"       : ( "v4" | "v6" ) ?,
-   "name"            : string ?,
-   "type"            : string ?,
-   "country"         : /[A-Z]{2}/ ?,
-   "parentHandle"    : string ?,
-   $entities ?
-)
-
-;
-; RFC 7483 Section 5.5 - Autnum Object Class
-;
-
-$autnum_oc = {
-   $autnum_mixin
-}
-
-$autnum_mixin = (
-   "objectClassName" : "autnum",
-   $common_mixin,
-   "startAutnum"     : int32 ?,
-   "endAutnum"       : int32 ?,
-   "name"            : string ?,
-   "type"            : string ?,
-   $entities ?
-)
-
-;
-; RFC 7483 Section 6 - Error
-;
-
-$error_mixin = (
-   "errorCode"   : integer,
-   "title"       : string ?, 
-   "description" : [ string * ] ?
-)
-
-;
-; RFC 7483 Section 8 - Search Results
-;
-
-$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
-$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
-$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
-
+&rdap_all;
                 </artwork>
             </figure>
         </section>        

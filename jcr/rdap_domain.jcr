@@ -1,0 +1,48 @@
+$domain_oc = {
+   $domain_mixin
+}
+
+$domain_mixin = (
+   "objectClassName" : "domain",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "variants"        : [ $variant * ] ?,
+   $nameservers ?,
+   $secureDNS ?
+)
+
+$variant = {
+   "relation"     : [ string * ] ?,
+   "idnTable"     : string ?,
+   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
+}
+
+$secureDNS = "secureDNS" : {
+   "zoneSigned"       : boolean ?,
+   "delegationSigned" : boolean ?,
+   "maxSigLife"       : integer ?,
+   "dsData"           : [ $dsData_obj * ] ?,
+   "keyData"          : [ $keyData_obj * ] ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
+}
+
+$dsData_obj = {
+   "keyTag"     : integer,
+   "algorithm"  : integer,
+   "digest"     : string,
+   "digestType" : integer,
+   $events ?,
+   $links ?
+}
+
+$keyData_obj = {
+   "flags"     : integer,
+   "protocol"  : integer,
+   "publicKey" : string,
+   "algorithm" : integer,
+   $events ?,
+   $links ?
+}

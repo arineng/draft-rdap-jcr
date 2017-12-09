@@ -1,0 +1,299 @@
+;
+; JSON Content Rules (JCR) for the Registry Data Access Protocol (RDAP)
+; Specified in RFC 7483
+;
+
+;
+; The various types of responses
+;
+
+$entity_response =           @{root} { $response_mixin, 
+                                       $entity_mixin }
+
+$nameserver_response =       @{root} { $response_mixin, 
+                                       $nameserver_mixin }
+
+$domain_response =           @{root} { $response_mixin, 
+                                       $domain_mixin }
+
+$network_response =          @{root} { $response_mixin, 
+                                       $network_mixin }
+
+$autnum_response =           @{root} { $response_mixin, 
+                                       $autnum_mixin }
+
+$error_response =            @{root} { $response_mixin, 
+                                       $error_mixin }
+
+$help_response =             @{root} { $response_mixin }
+
+$domainSearch_response =     @{root} { $response_mixin, 
+                                       $domainSearchResult }
+
+$nameserverSearch_response = @{root} { $response_mixin, 
+                                       $nameserverSearchResult }
+
+$entitySearch_response =     @{root} { $response_mixin, 
+                                       $entitySearchResult }
+$response_mixin = (
+   $rdapConformance ?,
+   "notices" : $notices ?,
+   $lang
+)
+
+;
+; RFC 7483 Section 4.1 - RDAP Conformance                   
+;
+
+$rdapConformance = "rdapConformance" : [ string * ]
+
+;
+; RFC 7483 Section 4.2 - Links
+;
+
+$links = ( "links" : [ $link * ] ? )
+
+; see RFC 5988
+$link = {
+   "value"    : uri ?,
+   "rel"      : string ?,
+   "href"     : uri,
+   "hreflang" : [ $lang_value * ] ?,
+   "title"    : string ?,
+   "media"    : string ?,
+   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
+}
+
+;
+; RFC 7483 Section 4.3 - Notices
+;
+
+$notices = [ $notice * ]
+
+$notice = {
+    "title"       : string ?,
+    "description" : [ string * ],
+    "type"        : string ?,
+    $links,
+    $lang
+}
+
+;
+; RFC 7483 Section 4.4 - Language Identifier
+;
+
+$lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+$lang = ( "lang" : $lang_value ? )
+
+;
+; RFC 7483 Section 4.5 - Events
+;
+
+$events = "events" : [ $event * ]
+
+$event = {
+   "eventAction" : string,
+   "eventActor"  : string ?,
+   "eventDate"   : datetime,
+   $links,
+   $lang
+}
+
+;
+; RFC 7483 Section 4.6 - Status
+;
+
+$status = "status" : [ string * ]
+
+;
+; RFC 7483 Section 4.7 - Port43
+;
+
+$port43 = "port43" : string
+
+;
+; RFC 7482 Section 4.8 - Public Ids
+;
+
+$publicIds = "publicIds" : [ $publicId * ]
+
+$publicId = {
+  "type"       : string,
+  "identifier" : string
+}
+
+;
+; Common Object Class Structures
+;
+
+$common_mixin = (
+   "handle"  : string ?,
+   "remarks" : [ $notice * ] ?,
+   $links,
+   $events ?,
+   $status ?,
+   $port43 ?,
+   $lang
+)
+
+;
+; RFC 7483 Section 5.1 - Entity Object Class
+;
+
+$entities = "entities" : [ $entity_oc * ]
+
+$entity_oc = {
+   $entity_mixin
+}
+
+$entity_mixin = (
+   "objectClassName" : "entity",
+   $common_mixin,
+   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "asEventActor"    : [ $event * ] ?,
+   "roles"           : [ string * ] ?,
+   $publicIds ?,
+   $entities ?,
+   "networks"        : [ $network_oc * ] ?,
+   "autnums"         : [ $autnum_oc * ] ?
+)
+
+; See RFC 7095
+$vcard = @{unordered} [
+   [ "version", {}, "text", "4.0" ],
+   [ "fn", {}, "text", string ],
+   [ string, 
+     { /.*/:any * }, 
+     "text", 
+     ( string | [ string * ] ) 
+   ] *
+]
+
+;
+; RFC 7483 Section 5.2 - Nameserver Object Class
+;
+
+$nameservers = "nameservers" : [ $nameserver_oc * ]
+
+$nameserver_oc = {
+   $nameserver_mixin
+}
+
+$nameserver_mixin = (
+   "objectClassName" : "nameserver",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   $entities ?
+)
+
+;
+; RFC 7483 Section 5.3 - Domain Object Class
+;
+
+$domain_oc = {
+   $domain_mixin
+}
+
+$domain_mixin = (
+   "objectClassName" : "domain",
+   $common_mixin,
+   "ldhName"         : fqdn,
+   "unicodeName"     : idn ?,
+   "variants"        : [ $variant * ] ?,
+   $nameservers ?,
+   $secureDNS ?
+)
+
+$variant = {
+   "relation"     : [ string * ] ?,
+   "idnTable"     : string ?,
+   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
+}
+
+$secureDNS = "secureDNS" : {
+   "zoneSigned"       : boolean ?,
+   "delegationSigned" : boolean ?,
+   "maxSigLife"       : integer ?,
+   "dsData"           : [ $dsData_obj * ] ?,
+   "keyData"          : [ $keyData_obj * ] ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
+}
+
+$dsData_obj = {
+   "keyTag"     : integer,
+   "algorithm"  : integer,
+   "digest"     : string,
+   "digestType" : integer,
+   $events ?,
+   $links ?
+}
+
+$keyData_obj = {
+   "flags"     : integer,
+   "protocol"  : integer,
+   "publicKey" : string,
+   "algorithm" : integer,
+   $events ?,
+   $links ?
+}
+
+;
+; RFC 7483 Section 5.4 - IP Network Object Class
+;
+
+$network_oc = {
+   $network_mixin
+}
+
+$network_mixin = (
+   "objectClassName" : "ip network",
+   $common_mixin,
+   "startAddress"    : ( ipv4 | ipv6 ) ?,
+   "endAddres"       : ( ipv4 | ipv6 ) ?,
+   "ipVersion"       : ( "v4" | "v6" ) ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   "country"         : /[A-Z]{2}/ ?,
+   "parentHandle"    : string ?,
+   $entities ?
+)
+
+;
+; RFC 7483 Section 5.5 - Autnum Object Class
+;
+
+$autnum_oc = {
+   $autnum_mixin
+}
+
+$autnum_mixin = (
+   "objectClassName" : "autnum",
+   $common_mixin,
+   "startAutnum"     : int32 ?,
+   "endAutnum"       : int32 ?,
+   "name"            : string ?,
+   "type"            : string ?,
+   $entities ?
+)
+
+;
+; RFC 7483 Section 6 - Error
+;
+
+$error_mixin = (
+   "errorCode"   : integer,
+   "title"       : string ?, 
+   "description" : [ string * ] ?
+)
+
+;
+; RFC 7483 Section 8 - Search Results
+;
+
+$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
+$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
+$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]

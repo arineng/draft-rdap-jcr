@@ -1,0 +1,6 @@
+$publicIds = "publicIds" : [ $publicId * ]
+
+$publicId = {
+  "type"       : string,
+  "identifier" : string
+}
