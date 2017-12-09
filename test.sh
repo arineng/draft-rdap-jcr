@@ -25,6 +25,12 @@ do
   assert_raises "jcr -r jcr/rdap.jcr -S network_response $good_json" 0
 done
 
+# autnums
+for good_json in json/good/autnum_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -S autnum_response $good_json" 0
+done
+
 # nameservers
 for good_json in json/good/nameserver_response/*.json
 do
