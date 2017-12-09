@@ -42,7 +42,7 @@ $entitySearch_response =     @{root} { $response_mixin,
 $response_mixin = (
    $rdapConformance ?,
    "notices" : $notices ?,
-   $lang
+   $lang ?
 )
 ; end_part
 
@@ -59,7 +59,7 @@ $rdapConformance = "rdapConformance" : [ string * ]
 ;
 
 ; start_part rdap_links.jcr
-$links = ( "links" : [ $link * ] ? )
+$links = ( "links" : [ $link * ] )
 
 ; see RFC 5988
 $link = {
@@ -84,8 +84,8 @@ $notice = {
     "title"       : string ?,
     "description" : [ string * ],
     "type"        : string ?,
-    $links,
-    $lang
+    $links ?,
+    $lang ?
 }
 ; end_part
 
@@ -94,8 +94,10 @@ $notice = {
 ;
 
 ; start_part rdap_language.jcr
+; the language value as defined in RFC 5646
 $lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-$lang = ( "lang" : $lang_value ? )
+
+$lang = ( "lang" : $lang_value )
 ; end_part
 
 ;
@@ -109,8 +111,8 @@ $event = {
    "eventAction" : string,
    "eventActor"  : string ?,
    "eventDate"   : datetime,
-   $links,
-   $lang
+   $links ?,
+   $lang ?
 }
 ; end_part
 
@@ -151,11 +153,11 @@ $publicId = {
 $common_mixin = (
    "handle"  : string ?,
    "remarks" : [ $notice * ] ?,
-   $links,
+   $links ?,
    $events ?,
    $status ?,
    $port43 ?,
-   $lang
+   $lang ?
 )
 ; end_part
 
