@@ -1,0 +1,59 @@
+; all_parts rdap_strict_all.jcr
+;
+; Override rules for strict RDAP checking.
+;
+
+$entity_response =           @{root} { $response_mixin,
+                                       $entity_mixin,
+                                       @{not} $error_mixin }
+
+$nameserver_response =       @{root} { $response_mixin,
+                                       $nameserver_mixin,
+                                       @{not} $error_mixin }
+
+$domain_response =           @{root} { $response_mixin,
+                                       $domain_mixin,
+                                       @{not} $error_mixin }
+
+$network_response =          @{root} { $response_mixin,
+                                       $network_mixin,
+                                       @{not} $error_mixin }
+
+$autnum_response =           @{root} { $response_mixin,
+                                       $autnum_mixin,
+                                       @{not} $error_mixin }
+
+$error_response =            @{root} { $response_mixin,
+                                       $error_mixin,
+                                       @{not} $object_class }
+
+$help_response =             @{root} { $response_mixin,
+                                       $lang ?,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$domainSearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
+                                       $domainSearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$nameserverSearch_response = @{root} { $response_mixin,
+                                       $lang ?,
+                                       $nameserverSearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$entitySearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
+                                       $entitySearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$object_class = (
+    $entity_mixin,
+    $nameserver_mixin,
+    $domain_mixin,
+    $network_mixin,
+    $autnum_mixin
+)
