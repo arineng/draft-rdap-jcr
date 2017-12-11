@@ -8,7 +8,7 @@
 # Test that the JCR is good itself
 #
 assert_raises "jcr -r jcr/rdap.jcr --test-jcr" 0
-#assert_raises "jcr -r jcr/rdap_strict.jcr --test-jcr" 0
+assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr --test-jcr" 0
 
 #
 # Good JSON
@@ -17,8 +17,8 @@ assert_raises "jcr -r jcr/rdap.jcr --test-jcr" 0
 # entities
 for good_json in json/good/entity_response/*.json
 do
-  #assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S entity_response $good_json" 0
-  assert_raises "jcr -r jcr/rdap.jcr -S entity_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S entity_response $good_json" 0
+  #assert_raises "jcr -r jcr/rdap.jcr -S entity_response $good_json" 0
 done
 
 # networks
