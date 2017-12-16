@@ -18,43 +18,42 @@ assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr --test-jcr" 0
 for good_json in json/good/entity_response/*.json
 do
   assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S entity_response $good_json" 0
-  #assert_raises "jcr -r jcr/rdap.jcr -S entity_response $good_json" 0
 done
 
 # networks
 for good_json in json/good/network_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S network_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S network_response $good_json" 0
 done
 
 # autnums
 for good_json in json/good/autnum_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S autnum_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S autnum_response $good_json" 0
 done
 
 # nameservers
 for good_json in json/good/nameserver_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S nameserver_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S nameserver_response $good_json" 0
 done
 
 # domains
 for good_json in json/good/domain_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S domain_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S domain_response $good_json" 0
 done
 
 # errors
 for good_json in json/good/error_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S error_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S error_response $good_json" 0
 done
 
 # help
 for good_json in json/good/help_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S help_response $good_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S help_response $good_json" 0
 done
 
 #
@@ -64,7 +63,7 @@ done
 # networks
 for bad_json in json/bad/network_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -S network_response $bad_json" 3
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S network_response $bad_json" 3
 done
 
 #
