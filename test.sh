@@ -66,6 +66,12 @@ do
   assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S network_response $bad_json" 3
 done
 
+# errors
+for bad_json in json/bad/error_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/rdap_strict.jcr -S error_response $bad_json" 0
+done
+
 #
 # Fini
 #
