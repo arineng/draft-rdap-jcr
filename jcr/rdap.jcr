@@ -332,11 +332,13 @@ $autnum_mixin = (
 ; RFC 7483 Section 6 - Error
 ;
 
+; start_part rdap_error.jcr
 $error_mixin = (
    "errorCode"   : integer,
    "title"       : string ?, 
    "description" : [ string * ] ?
 )
+; end_part
 
 ;
 ; RFC 7483 Section 8 - Search Results

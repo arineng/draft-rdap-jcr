@@ -12,24 +12,31 @@
 <!ENTITY I-D.newton-json-content-rules PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml3/reference.I-D.newton-json-content-rules.xml'>
 
-<!ENTITY rdap_all PUBLIC '' 'jcr/rdap_all.jcr'>
-<!ENTITY rdap_autnum PUBLIC '' 'jcr/rdap_autnum.jcr'>
-<!ENTITY rdap_common_mixin PUBLIC '' 'jcr/rdap_common_mixin.jcr' >
-<!ENTITY rdap_conformance PUBLIC '' 'jcr/rdap_conformance.jcr' >
-<!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr' >
-<!ENTITY rdap_entity PUBLIC '' 'jcr/rdap_entity.jcr' >
-<!ENTITY rdap_events PUBLIC '' 'jcr/rdap_events.jcr' >
-<!ENTITY rdap_language PUBLIC '' 'jcr/rdap_language.jcr' >
-<!ENTITY rdap_links PUBLIC '' 'jcr/rdap_links.jcr' >
-<!ENTITY rdap_nameserver PUBLIC '' 'jcr/rdap_nameserver.jcr' >
-<!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr' >
-<!ENTITY rdap_notices PUBLIC '' 'jcr/rdap_notices.jcr' >
-<!ENTITY rdap_port PUBLIC '' 'jcr/rdap_port.jcr' >
-<!ENTITY rdap_publicids PUBLIC '' 'jcr/rdap_publicids.jcr' >
-<!ENTITY rdap_response_mixin PUBLIC '' 'jcr/rdap_response_mixin.jcr' >
-<!ENTITY rdap_roots PUBLIC '' 'jcr/rdap_roots.jcr' >
-<!ENTITY rdap_searches PUBLIC '' 'jcr/rdap_searches.jcr' >
-<!ENTITY rdap_status PUBLIC '' 'jcr/rdap_status.jcr' >
+        <!ENTITY rdap_all PUBLIC '' 'jcr/rdap_all.jcr'>
+        <!ENTITY rdap_roots PUBLIC '' 'jcr/rdap_roots.jcr'>
+        <!ENTITY rdap_response_mixin PUBLIC '' 'jcr/rdap_response_mixin.jcr'>
+        <!ENTITY rdap_conformance PUBLIC '' 'jcr/rdap_conformance.jcr'>
+        <!ENTITY rdap_links PUBLIC '' 'jcr/rdap_links.jcr'>
+        <!ENTITY rdap_notices PUBLIC '' 'jcr/rdap_notices.jcr'>
+        <!ENTITY rdap_language PUBLIC '' 'jcr/rdap_language.jcr'>
+        <!ENTITY rdap_events PUBLIC '' 'jcr/rdap_events.jcr'>
+        <!ENTITY rdap_status PUBLIC '' 'jcr/rdap_status.jcr'>
+        <!ENTITY rdap_port PUBLIC '' 'jcr/rdap_port.jcr'>
+        <!ENTITY rdap_publicids PUBLIC '' 'jcr/rdap_publicids.jcr'>
+        <!ENTITY rdap_common_mixin PUBLIC '' 'jcr/rdap_common_mixin.jcr'>
+        <!ENTITY rdap_entity PUBLIC '' 'jcr/rdap_entity.jcr'>
+        <!ENTITY rdap_nameserver PUBLIC '' 'jcr/rdap_nameserver.jcr'>
+        <!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr'>
+        <!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr'>
+        <!ENTITY rdap_autnum PUBLIC '' 'jcr/rdap_autnum.jcr'>
+        <!ENTITY rdap_error PUBLIC '' 'jcr/rdap_error.jcr'>
+        <!ENTITY rdap_searches PUBLIC '' 'jcr/rdap_searches.jcr'>
+
+        <!ENTITY strict_all PUBLIC '' 'jcr/strict_all.jcr'>
+        <!ENTITY strict_object_classes PUBLIC '' 'jcr/strict_object_classes.jcr'>
+        <!ENTITY strict_help_and_error PUBLIC '' 'jcr/strict_help_and_error.jcr'>
+        <!ENTITY strict_search_responses PUBLIC '' 'jcr/strict_search_responses.jcr'>
+        <!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>
 ]>
 <?rfc toc="true"?>
 <rfc category="info" docName="draft-newton-rdap-jcr-03" ipr="trust200902">
@@ -90,7 +97,7 @@
                 entity class response, an error response, a help response, and three search
                 responses.
             </t>
-            <figure>
+            <figure anchor="roots">
                 <artwork xml:space="preserve" align="center">
 &rdap_roots;
                 </artwork>
@@ -99,7 +106,7 @@
                 All of the responses have a common set of object members described
                 by response_mixin.
             </t>
-            <figure>
+            <figure anchor="response_mixin">
                 <artwork xml:space="preserve" align="center">
 &rdap_response_mixin;
                 </artwork>
@@ -118,7 +125,7 @@
                     The rules supplied here only provide for a basic validation of jCard, as the
                     validation of jCard is beyond the scope of this document.
                 </t>
-                <figure>
+                <figure anchor="entity">
                     <artwork xml:space="preserve" align="center">
 &rdap_entity;
                 </artwork>
@@ -128,7 +135,7 @@
                 <t>
                     The nameserver object class represents DNS nameservers in registries.
                 </t>
-                <figure>
+                <figure anchor="nameserver">
                     <artwork xml:space="preserve" align="center">
 &rdap_nameserver;
                 </artwork>
@@ -140,7 +147,7 @@
                     defined in RDAP. It represents both forward and reverse DNS delegations.
                     It's complexity is mostly due to the DNSSEC provisions of the object class.
                 </t>
-                <figure>
+                <figure anchor="domain">
                     <artwork xml:space="preserve" align="center">
 &rdap_domain;
                 </artwork>
@@ -150,7 +157,7 @@
                 <t>
                     The IP Network object class represents IP network registrations in RIRs.
                 </t>
-                <figure>
+                <figure anchor="network">
                     <artwork xml:space="preserve" align="center">
 &rdap_network;
                 </artwork>
@@ -161,7 +168,7 @@
                     The Autnum object class represents an autonomous system number or blocks of
                     autonomous system numbers in an RIR.
                 </t>
-                <figure>
+                <figure anchor="autnum">
                     <artwork xml:space="preserve" align="center">
 &rdap_autnum;
                 </artwork>
@@ -172,9 +179,19 @@
             <t>
                 Search results in RDAP are merely arrays of object classes.
             </t>
-            <figure>
+            <figure anchor="searches">
                 <artwork xml:space="preserve" align="center">
 &rdap_searches;
+                </artwork>
+            </figure>
+        </section>
+        <section title="Error Response">
+            <t>
+                Section 6 of <xref target="RFC7483"></xref> describes RDAP error responses.
+            </t>
+            <figure anchor="error">
+                <artwork xml:space="preserve" align="center">
+&rdap_error;
                 </artwork>
             </figure>
         </section>
@@ -186,7 +203,7 @@
             <t>
                 Most of these common structures are grouped together in a rule called common_mixin.
             </t>
-            <figure>
+            <figure anchor="common_mixin">
                 <artwork xml:space="preserve" align="center">
 &rdap_common_mixin;
                 </artwork>
@@ -196,7 +213,7 @@
                     The rdapConformance array is the versioning and capabilities negotiation
                     mechanism of RDAP.
                 </t>
-                <figure>
+                <figure anchor="conformance">
                     <artwork xml:space="preserve" align="center">
 &rdap_conformance;
                     </artwork>
@@ -213,7 +230,7 @@
                     RDAP links are an array of distinct objects, each representing
                     a separate link.
                 </t>
-                <figure>
+                <figure anchor="links">
                     <artwork xml:space="preserve" align="center">
 &rdap_links;
                     </artwork>
@@ -225,7 +242,7 @@
                     notices are meta-data regarding the entirety of a response whereas remarks are
                     meta-data covering a specific instance of an object class.
                 </t>
-                <figure>
+                <figure anchor="notices">
                     <artwork xml:space="preserve" align="center">
 &rdap_notices;
                     </artwork>
@@ -236,7 +253,7 @@
                     The "lang" member occurs many RDAP data structures. And the same construct is
                     used in the links structures.
                 </t>
-                <figure>
+                <figure anchor="language">
                     <artwork xml:space="preserve" align="center">
 &rdap_language;
                     </artwork>
@@ -248,7 +265,7 @@
                     and by whom. The same structure appears in all object classes, as well as
                     being re-used by entities embedded by other objects.
                 </t>
-                <figure>
+                <figure anchor="events">
                     <artwork xml:space="preserve" align="center">
 &rdap_events;
                     </artwork>
@@ -260,7 +277,7 @@
                     The status of RDAP object instances is indicated by an array of strings,
                     where the value of the strings are registered in an IANA registry.
                 </t>
-                <figure>
+                <figure anchor="status">
                     <artwork xml:space="preserve" align="center">
 &rdap_status;
                     </artwork>
@@ -272,7 +289,7 @@
                     using the "port43" object member. This is simply a string holding the hostname
                     of the Whois service.
                 </t>
-                <figure>
+                <figure anchor="port">
                     <artwork xml:space="preserve" align="center">
 &rdap_port;
                     </artwork>
@@ -284,15 +301,54 @@
                     public identifiers, such as ICANN Registrar IDs. The publicIds object
                     member is an array of objects to represent these identifiers.
                 </t>
-                <figure>
+                <figure anchor="publicids">
                     <artwork xml:space="preserve" align="center">
 &rdap_publicids;
                     </artwork>
                 </figure>
             </section>
         </section>
+        <section title="Validating Responses">
+            <t>
+                Many JSON roots for RDAP are defined in <xref target="roots"></xref>. For applications where an RDAP
+                query must yield a specific response, the appropriate root must be used for validating the response.
+            </t>
+            <t>
+                For example, if the RDAP query https://example.com/rdap/ip/2001:db8::0 is expected to yield an IP
+                network response, then the validation must only use the $network_response root.
+            </t>
+        </section>
+        <section title="Stricter Validation">
+            <t>
+                RDAP has a very lenient JSON model where information and structures not strictly forbidden are
+                allowed. However, this lenient model allows information from RDAP help and error responses to be
+                found in other responses, and responses for single objects to be found in responses from searches.
+            </t>
+            <t>
+                For applications where these structures cannot be mixed and validation is desired, override rules
+                may be used.
+            </t>
+            <t>
+                In the following override rules for object class responses, the RDAP $error_mixin is specifically
+                disallowed.
+            </t>
+            <figure anchor="object_classes">
+                <artwork xml:space="preserve" align="center">
+&strict_object_classes;
+                </artwork>
+            </figure>
+            <t>
+                To prevent the help, error and search responses from containing object class responses, the following
+                rule defines all the object classes.
+            </t>
+            <figure anchor="object_class_mixins">
+                <artwork xml:space="preserve" align="center">
+&strict_object_class_mixins;
+                </artwork>
+            </figure>
+        </section>
         <section title="Complete JCR for RDAP">
-            <figure title="Complete JSON Content Rules for RDAP">
+            <figure title="Complete JSON Content Rules for RDAP" anchor="rdap_all">
                 <preamble>
                     The following is the complete ruleset of JSON Content Rules for RDAP.
                 </preamble>

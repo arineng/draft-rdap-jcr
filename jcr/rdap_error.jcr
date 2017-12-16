@@ -1,0 +1,5 @@
+$error_mixin = (
+   "errorCode"   : integer,
+   "title"       : string ?, 
+   "description" : [ string * ] ?
+)

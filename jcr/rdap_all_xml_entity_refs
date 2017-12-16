@@ -15,4 +15,5 @@
 <!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr'>
 <!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr'>
 <!ENTITY rdap_autnum PUBLIC '' 'jcr/rdap_autnum.jcr'>
+<!ENTITY rdap_error PUBLIC '' 'jcr/rdap_error.jcr'>
 <!ENTITY rdap_searches PUBLIC '' 'jcr/rdap_searches.jcr'>
