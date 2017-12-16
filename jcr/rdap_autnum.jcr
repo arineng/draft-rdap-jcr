@@ -9,5 +9,6 @@ $autnum_mixin = (
    "endAutnum"       : int32 ?,
    "name"            : string ?,
    "type"            : string ?,
+   "country"         : string ?,
    $entities ?
 )

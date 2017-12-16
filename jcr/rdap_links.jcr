@@ -1,4 +1,4 @@
-$links = ( "links" : [ $link * ] ? )
+$links = ( "links" : [ $link * ] )
 
 ; see RFC 5988
 $link = {

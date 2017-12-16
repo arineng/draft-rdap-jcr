@@ -25,20 +25,23 @@ $autnum_response =           @{root} { $response_mixin,
 $error_response =            @{root} { $response_mixin, 
                                        $error_mixin }
 
-$help_response =             @{root} { $response_mixin }
+$help_response =             @{root} { $response_mixin,
+                                       $lang ?}
 
-$domainSearch_response =     @{root} { $response_mixin, 
+$domainSearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
                                        $domainSearchResult }
 
 $nameserverSearch_response = @{root} { $response_mixin, 
+                                       $lang ?,
                                        $nameserverSearchResult }
 
 $entitySearch_response =     @{root} { $response_mixin, 
+                                       $lang ?,
                                        $entitySearchResult }
 $response_mixin = (
    $rdapConformance ?,
-   "notices" : $notices ?,
-   $lang
+   "notices" : $notices ?
 )
 
 ;
@@ -51,7 +54,7 @@ $rdapConformance = "rdapConformance" : [ string * ]
 ; RFC 7483 Section 4.2 - Links
 ;
 
-$links = ( "links" : [ $link * ] ? )
+$links = ( "links" : [ $link * ] )
 
 ; see RFC 5988
 $link = {
@@ -74,16 +77,18 @@ $notice = {
     "title"       : string ?,
     "description" : [ string * ],
     "type"        : string ?,
-    $links,
-    $lang
+    $links ?,
+    $lang ?
 }
 
 ;
 ; RFC 7483 Section 4.4 - Language Identifier
 ;
 
+; the language value as defined in RFC 5646
 $lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-$lang = ( "lang" : $lang_value ? )
+
+$lang = ( "lang" : $lang_value )
 
 ;
 ; RFC 7483 Section 4.5 - Events
@@ -91,13 +96,22 @@ $lang = ( "lang" : $lang_value ? )
 
 $events = "events" : [ $event * ]
 
-$event = {
-   "eventAction" : string,
-   "eventActor"  : string ?,
-   "eventDate"   : datetime,
-   $links,
-   $lang
+$noActorEvent_mixin = (
+    "eventAction" : string,
+    "eventDate"   : datetime,
+    $links,
+    $lang
+)
+
+$noActorEvent = {
+    $noActorEvent_mixin
 }
+
+$event = {
+    $noActorEvent_mixin,
+    "eventActor" : string
+}
+
 
 ;
 ; RFC 7483 Section 4.6 - Status
@@ -129,11 +143,11 @@ $publicId = {
 $common_mixin = (
    "handle"  : string ?,
    "remarks" : [ $notice * ] ?,
-   $links,
+   $links ?,
    $events ?,
    $status ?,
    $port43 ?,
-   $lang
+   $lang ?
 )
 
 ;
@@ -150,7 +164,7 @@ $entity_mixin = (
    "objectClassName" : "entity",
    $common_mixin,
    "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
-   "asEventActor"    : [ $event * ] ?,
+   "asEventActor"    : [ $noActorEvent * ] ?,
    "roles"           : [ string * ] ?,
    $publicIds ?,
    $entities ?,
@@ -203,7 +217,10 @@ $domain_mixin = (
    "unicodeName"     : idn ?,
    "variants"        : [ $variant * ] ?,
    $nameservers ?,
-   $secureDNS ?
+   $secureDNS ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
 )
 
 $variant = {
@@ -217,10 +234,7 @@ $secureDNS = "secureDNS" : {
    "delegationSigned" : boolean ?,
    "maxSigLife"       : integer ?,
    "dsData"           : [ $dsData_obj * ] ?,
-   "keyData"          : [ $keyData_obj * ] ?,
-   $entities ?,
-   $publicIds ?,
-   "network"          : $network_oc ?
+   "keyData"          : [ $keyData_obj * ] ?
 }
 
 $dsData_obj = {
@@ -277,6 +291,7 @@ $autnum_mixin = (
    "endAutnum"       : int32 ?,
    "name"            : string ?,
    "type"            : string ?,
+   "country"         : string ?,
    $entities ?
 )
 

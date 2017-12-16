@@ -1,0 +1,23 @@
+;
+; Object class response
+;
+
+$entity_response =           @{root} { $response_mixin,
+                                       $entity_mixin,
+                                       @{not} $error_mixin }
+
+$nameserver_response =       @{root} { $response_mixin,
+                                       $nameserver_mixin,
+                                       @{not} $error_mixin }
+
+$domain_response =           @{root} { $response_mixin,
+                                       $domain_mixin,
+                                       @{not} $error_mixin }
+
+$network_response =          @{root} { $response_mixin,
+                                       $network_mixin,
+                                       @{not} $error_mixin }
+
+$autnum_response =           @{root} { $response_mixin,
+                                       $autnum_mixin,
+                                       @{not} $error_mixin }

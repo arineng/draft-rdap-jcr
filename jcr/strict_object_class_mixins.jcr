@@ -1,0 +1,11 @@
+;
+; Object class mixins
+;
+
+$object_class = (
+    $entity_mixin,
+    $nameserver_mixin,
+    $domain_mixin,
+    $network_mixin,
+    $autnum_mixin
+)

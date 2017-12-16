@@ -20,13 +20,17 @@ $autnum_response =           @{root} { $response_mixin,
 $error_response =            @{root} { $response_mixin, 
                                        $error_mixin }
 
-$help_response =             @{root} { $response_mixin }
+$help_response =             @{root} { $response_mixin,
+                                       $lang ?}
 
-$domainSearch_response =     @{root} { $response_mixin, 
+$domainSearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
                                        $domainSearchResult }
 
 $nameserverSearch_response = @{root} { $response_mixin, 
+                                       $lang ?,
                                        $nameserverSearchResult }
 
 $entitySearch_response =     @{root} { $response_mixin, 
+                                       $lang ?,
                                        $entitySearchResult }

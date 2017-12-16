@@ -1,6 +1,11 @@
-; all_parts rdap_strict_all.jcr
+; all_parts strict_all.jcr
 ;
 ; Override rules for strict RDAP checking.
+;
+
+; start_part strict_object_classes.jcr
+;
+; Object class response
 ;
 
 $entity_response =           @{root} { $response_mixin,
@@ -22,6 +27,11 @@ $network_response =          @{root} { $response_mixin,
 $autnum_response =           @{root} { $response_mixin,
                                        $autnum_mixin,
                                        @{not} $error_mixin }
+; end_part
+; start_part strict_help_and_error.jcr
+;
+; Help and error response
+;
 
 $error_response =            @{root} { $response_mixin,
                                        $error_mixin,
@@ -31,6 +41,11 @@ $help_response =             @{root} { $response_mixin,
                                        $lang ?,
                                        @{not} $error_mixin,
                                        @{not} $object_class }
+; end_part
+; start_part strict_search_responses.jcr
+;
+; Search responses
+;
 
 $domainSearch_response =     @{root} { $response_mixin,
                                        $lang ?,
@@ -49,6 +64,11 @@ $entitySearch_response =     @{root} { $response_mixin,
                                        $entitySearchResult,
                                        @{not} $error_mixin,
                                        @{not} $object_class }
+; end_part
+; start_part strict_object_class_mixins.jcr
+;
+; Object class mixins
+;
 
 $object_class = (
     $entity_mixin,
@@ -57,3 +77,4 @@ $object_class = (
     $network_mixin,
     $autnum_mixin
 )
+; end_part

@@ -1,0 +1,21 @@
+;
+; Search responses
+;
+
+$domainSearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
+                                       $domainSearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$nameserverSearch_response = @{root} { $response_mixin,
+                                       $lang ?,
+                                       $nameserverSearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }
+
+$entitySearch_response =     @{root} { $response_mixin,
+                                       $lang ?,
+                                       $entitySearchResult,
+                                       @{not} $error_mixin,
+                                       @{not} $object_class }

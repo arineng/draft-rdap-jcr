@@ -4,6 +4,6 @@ $notice = {
     "title"       : string ?,
     "description" : [ string * ],
     "type"        : string ?,
-    $links,
-    $lang
+    $links ?,
+    $lang ?
 }

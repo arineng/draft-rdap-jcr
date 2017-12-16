@@ -1,0 +1,5 @@
+<!ENTITY strict_all PUBLIC '' 'jcr/strict_all.jcr'>
+<!ENTITY strict_object_classes PUBLIC '' 'jcr/strict_object_classes.jcr'>
+<!ENTITY strict_help_and_error PUBLIC '' 'jcr/strict_help_and_error.jcr'>
+<!ENTITY strict_search_responses PUBLIC '' 'jcr/strict_search_responses.jcr'>
+<!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>

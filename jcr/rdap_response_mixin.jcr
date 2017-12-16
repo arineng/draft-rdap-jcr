@@ -1,5 +1,4 @@
 $response_mixin = (
    $rdapConformance ?,
-   "notices" : $notices ?,
-   $lang
+   "notices" : $notices ?
 )

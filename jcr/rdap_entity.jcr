@@ -8,7 +8,7 @@ $entity_mixin = (
    "objectClassName" : "entity",
    $common_mixin,
    "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
-   "asEventActor"    : [ $event * ] ?,
+   "asEventActor"    : [ $noActorEvent * ] ?,
    "roles"           : [ string * ] ?,
    $publicIds ?,
    $entities ?,

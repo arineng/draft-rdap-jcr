@@ -9,7 +9,10 @@ $domain_mixin = (
    "unicodeName"     : idn ?,
    "variants"        : [ $variant * ] ?,
    $nameservers ?,
-   $secureDNS ?
+   $secureDNS ?,
+   $entities ?,
+   $publicIds ?,
+   "network"          : $network_oc ?
 )
 
 $variant = {
@@ -23,10 +26,7 @@ $secureDNS = "secureDNS" : {
    "delegationSigned" : boolean ?,
    "maxSigLife"       : integer ?,
    "dsData"           : [ $dsData_obj * ] ?,
-   "keyData"          : [ $keyData_obj * ] ?,
-   $entities ?,
-   $publicIds ?,
-   "network"          : $network_oc ?
+   "keyData"          : [ $keyData_obj * ] ?
 }
 
 $dsData_obj = {

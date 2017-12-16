@@ -1,2 +1,4 @@
+; the language value as defined in RFC 5646
 $lang_value =: /[a-z]{2}(\-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
-$lang = ( "lang" : $lang_value ? )
+
+$lang = ( "lang" : $lang_value )

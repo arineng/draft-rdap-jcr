@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-cd jcr
-jcr -r rdap.jcr --test-jcr --process-parts
+jcr -r jcr/rdap.jcr -o jcr/strict.jcr --test-jcr --process-parts jcr

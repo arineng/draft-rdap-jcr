@@ -1,9 +1,9 @@
 $common_mixin = (
    "handle"  : string ?,
    "remarks" : [ $notice * ] ?,
-   $links,
+   $links ?,
    $events ?,
    $status ?,
    $port43 ?,
-   $lang
+   $lang ?
 )
