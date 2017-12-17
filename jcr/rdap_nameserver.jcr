@@ -9,6 +9,9 @@ $nameserver_mixin = (
    $common_mixin,
    "ldhName"         : fqdn,
    "unicodeName"     : idn ?,
-   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   "ipAddresses"     : {
+       "v4" : [ ipv4 ? ] ?,
+       "ip6" : [ ipv6 ? ] ?
+   } ?,
    $entities ?
 )

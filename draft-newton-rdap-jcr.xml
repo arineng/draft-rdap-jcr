@@ -37,6 +37,7 @@
         <!ENTITY strict_help_and_error PUBLIC '' 'jcr/strict_help_and_error.jcr'>
         <!ENTITY strict_search_responses PUBLIC '' 'jcr/strict_search_responses.jcr'>
         <!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>
+        <!ENTITY strict_searches PUBLIC '' 'jcr/strict_searches.jcr'>
 ]>
 <?rfc toc="true"?>
 <rfc category="info" docName="draft-newton-rdap-jcr-03" ipr="trust200902">
@@ -329,34 +330,81 @@
                 may be used.
             </t>
             <t>
+                For readability, two new rules are created to group the single objects and the search results.
+            </t>
+            <t>
                 In the following override rules for object class responses, the RDAP $error_mixin is specifically
                 disallowed.
             </t>
-            <figure anchor="object_classes">
-                <artwork xml:space="preserve" align="center">
-&strict_object_classes;
-                </artwork>
-            </figure>
-            <t>
-                To prevent the help, error and search responses from containing object class responses, the following
-                rule defines all the object classes.
-            </t>
             <figure anchor="object_class_mixins">
+                <preamble>
+                    The responses with a single object returned represented by mixins. This rule groups those
+                    mixins.
+                </preamble>
                 <artwork xml:space="preserve" align="center">
 &strict_object_class_mixins;
                 </artwork>
             </figure>
+            <figure anchor="search_results">
+                <preamble>
+                    The responses to searches are objects containing a single search member which is an array containing
+                    the object class mixins. This rule groups the search members.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_searches;
+                </artwork>
+            </figure>
+            <t>
+                Using the new rules in <xref target="object_class_mixins"></xref> and <xref target="search_results"></xref>,
+                override rules (rules rewriting existing rules) can be written for greater strictness.
+            </t>
+            <figure anchor="object_classes">
+                <preamble>
+                    These rules for single object responses prevent search and error response elements to be present.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_object_classes;
+                </artwork>
+            </figure>
+            <figure anchor="help_and_error">
+                <preamble>
+                    These rules for help and error responses prevent single object and search arrays.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_help_and_error;
+                </artwork>
+            </figure>
+            <figure anchor="search_responses">
+                <preamble>
+                    These rules for search responses prevent single object and error data structures.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_search_responses;
+                </artwork>
+            </figure>
         </section>
-        <section title="Complete JCR for RDAP">
-            <figure title="Complete JSON Content Rules for RDAP" anchor="rdap_all">
+        <section title="Complete Rulesets for RDAP">
+            <t>
+                The following rulesets, along with a test framework and examples of good and bad RDAP JSON
+                instances, may be found at <eref target="https://github.com/arineng/draft-rdap-jcr"></eref>.
+            </t>
+            <figure title="Complete Ruleset for RDAP" anchor="rdap_all">
                 <preamble>
                     The following is the complete ruleset of JSON Content Rules for RDAP.
                 </preamble>
-                <artwork xml:space="preserve">
+                <artwork xml:space="preserve" align="center">
 &rdap_all;
                 </artwork>
             </figure>
-        </section>        
+            <figure title="Override Ruleset for RDAP" anchor="string_all">
+                <preamble>
+                    The following is the complete ruleset of override rules for stricter validation of RDAP.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_all;
+                </artwork>
+            </figure>
+        </section>
 
     </middle>
     <back>

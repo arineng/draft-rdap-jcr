@@ -66,10 +66,16 @@ do
   assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S network_response $bad_json" 3
 done
 
+# nameservers
+for bad_json in json/bad/nameserver_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S nameserver_response $bad_json" 3
+done
+
 # errors
 for bad_json in json/bad/error_response/*.json
 do
-  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S error_response $bad_json" 0
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S error_response $bad_json" 3
 done
 
 #

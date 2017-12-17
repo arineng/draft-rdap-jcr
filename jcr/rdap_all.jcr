@@ -1,5 +1,7 @@
 ;
-; JSON Content Rules (JCR) for the Registry Data Access Protocol (RDAP)
+; JSON Content Rules (JCR) ruleset
+; for the Registry Data Access Protocol (RDAP)
+;
 ; Specified in RFC 7483
 ;
 
@@ -7,38 +9,59 @@
 ; The various types of responses
 ;
 
-$entity_response =           @{root} { $response_mixin, 
-                                       $entity_mixin }
+@{root} $entity_response = {
+    $response_mixin,
+    $entity_mixin
+}
 
-$nameserver_response =       @{root} { $response_mixin, 
-                                       $nameserver_mixin }
+@{root} $nameserver_response = {
+    $response_mixin,
+    $nameserver_mixin
+}
 
-$domain_response =           @{root} { $response_mixin, 
-                                       $domain_mixin }
+@{root} $domain_response = {
+    $response_mixin,
+    $domain_mixin
+}
 
-$network_response =          @{root} { $response_mixin, 
-                                       $network_mixin }
+@{root} $network_response = {
+    $response_mixin,
+    $network_mixin
+}
 
-$autnum_response =           @{root} { $response_mixin, 
-                                       $autnum_mixin }
+@{root} $autnum_response = {
+    $response_mixin,
+    $autnum_mixin
+}
 
-$error_response =            @{root} { $response_mixin, 
-                                       $error_mixin }
+@{root} $error_response = {
+    $response_mixin,
+    $error_mixin
+}
 
-$help_response =             @{root} { $response_mixin,
-                                       $lang ?}
+@{root} $help_response = {
+    $response_mixin,
+    $lang ?
+}
 
-$domainSearch_response =     @{root} { $response_mixin,
-                                       $lang ?,
-                                       $domainSearchResult }
+@{root} $domainSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $domainSearchResult
+}
 
-$nameserverSearch_response = @{root} { $response_mixin, 
-                                       $lang ?,
-                                       $nameserverSearchResult }
+@{root} $nameserverSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $nameserverSearchResult
+}
 
-$entitySearch_response =     @{root} { $response_mixin, 
-                                       $lang ?,
-                                       $entitySearchResult }
+@{root} $entitySearch_response = {
+    $response_mixin,
+    $lang ?,
+    $entitySearchResult
+}
+
 $response_mixin = (
    $rdapConformance ?,
    "notices" : $notices ?
@@ -64,7 +87,8 @@ $link = {
    "hreflang" : [ $lang_value * ] ?,
    "title"    : string ?,
    "media"    : string ?,
-   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
+   "type"     :
+       /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
 }
 
 ;
@@ -198,7 +222,10 @@ $nameserver_mixin = (
    $common_mixin,
    "ldhName"         : fqdn,
    "unicodeName"     : idn ?,
-   "ipAddresses"     : { "v4" : [ ipv4 ? ] ?, "ip6" : [ ipv6 ? ] ? } ?,
+   "ipAddresses"     : {
+       "v4" : [ ipv4 ? ] ?,
+       "ip6" : [ ipv6 ? ] ?
+   } ?,
    $entities ?
 )
 
@@ -226,7 +253,9 @@ $domain_mixin = (
 $variant = {
    "relation"     : [ string * ] ?,
    "idnTable"     : string ?,
-   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
+   "variantNames" : [
+       { "ldhName" : fqdn, "unicodeName" : idn } *
+   ]
 }
 
 $secureDNS = "secureDNS" : {
@@ -309,6 +338,11 @@ $error_mixin = (
 ; RFC 7483 Section 8 - Search Results
 ;
 
-$domainSearchResult     = "domainSearchResult"     : [ $domain_oc * ]
-$nameserverSearchResult = "nameserverSearchResult" : [ $nameserver_oc * ]
-$entitySearchResult     = "entitySearchResult"     : [ $entity_oc * ]
+$domainSearchResult =
+    "domainSearchResult"     : [ $domain_oc * ]
+
+$nameserverSearchResult =
+    "nameserverSearchResult" : [ $nameserver_oc * ]
+
+$entitySearchResult =
+    "entitySearchResult"     : [ $entity_oc * ]

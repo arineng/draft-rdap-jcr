@@ -18,7 +18,9 @@ $domain_mixin = (
 $variant = {
    "relation"     : [ string * ] ?,
    "idnTable"     : string ?,
-   "variantNames" : [ { "ldhName" : fqdn, "unicodeName" : idn } * ]
+   "variantNames" : [
+       { "ldhName" : fqdn, "unicodeName" : idn } *
+   ]
 }
 
 $secureDNS = "secureDNS" : {

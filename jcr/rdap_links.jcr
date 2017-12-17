@@ -8,5 +8,6 @@ $link = {
    "hreflang" : [ $lang_value * ] ?,
    "title"    : string ?,
    "media"    : string ?,
-   "type"     : /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
+   "type"     :
+       /[a-zA-Z][a-zA-Z0-9]*\/[a-zA-Z][a-zA-Z0-9]*/ ?
 }

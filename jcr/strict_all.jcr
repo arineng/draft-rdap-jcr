@@ -6,66 +6,102 @@
 ; Object class response
 ;
 
-$entity_response =           @{root} { $response_mixin,
-                                       $entity_mixin,
-                                       @{not} $error_mixin }
+@{root} $entity_response = {
+    $response_mixin,
+    $entity_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$nameserver_response =       @{root} { $response_mixin,
-                                       $nameserver_mixin,
-                                       @{not} $error_mixin }
+@{root} $nameserver_response = {
+    $response_mixin,
+    $nameserver_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$domain_response =           @{root} { $response_mixin,
-                                       $domain_mixin,
-                                       @{not} $error_mixin }
+@{root} $domain_response = {
+    $response_mixin,
+    $domain_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$network_response =          @{root} { $response_mixin,
-                                       $network_mixin,
-                                       @{not} $error_mixin }
+@{root} $network_response = {
+    $response_mixin,
+    $network_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$autnum_response =           @{root} { $response_mixin,
-                                       $autnum_mixin,
-                                       @{not} $error_mixin }
+@{root} $autnum_response = {
+    $response_mixin,
+    $autnum_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 ;
 ; Help and error response
 ;
 
-$error_response =            @{root} { $response_mixin,
-                                       $error_mixin,
-                                       @{not} $object_class }
+@{root} $error_response =  {
+    $response_mixin,
+    $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}
 
-$help_response =             @{root} { $response_mixin,
-                                       $lang ?,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $help_response = {
+    $response_mixin,
+    $lang ?,
+    @{not} $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}
 ;
 ; Search responses
 ;
 
-$domainSearch_response =     @{root} { $response_mixin,
-                                       $lang ?,
-                                       $domainSearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $domainSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $domainSearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 
-$nameserverSearch_response = @{root} { $response_mixin,
-                                       $lang ?,
-                                       $nameserverSearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $nameserverSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $nameserverSearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 
-$entitySearch_response =     @{root} { $response_mixin,
-                                       $lang ?,
-                                       $entitySearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $entitySearch_response = {
+    $response_mixin,
+    $lang ?,
+    $entitySearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 ;
 ; Object class mixins
 ;
 
 $object_class = (
-    $entity_mixin,
-    $nameserver_mixin,
-    $domain_mixin,
-    $network_mixin,
+    $entity_mixin |
+    $nameserver_mixin |
+    $domain_mixin |
+    $network_mixin |
     $autnum_mixin
+)
+;
+; All search results
+;
+
+$search_results = (
+    $domainSearchResult |
+    $nameserverSearchResult |
+    $entitySearchResult
 )

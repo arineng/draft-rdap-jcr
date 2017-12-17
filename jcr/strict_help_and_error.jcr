@@ -1,12 +1,14 @@
-;
-; Help and error response
-;
+@{root} $error_response =  {
+    $response_mixin,
+    $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}
 
-$error_response =            @{root} { $response_mixin,
-                                       $error_mixin,
-                                       @{not} $object_class }
-
-$help_response =             @{root} { $response_mixin,
-                                       $lang ?,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $help_response = {
+    $response_mixin,
+    $lang ?,
+    @{not} $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}

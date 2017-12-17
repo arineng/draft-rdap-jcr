@@ -3,78 +3,116 @@
 ; Override rules for strict RDAP checking.
 ;
 
-; start_part strict_object_classes.jcr
 ;
 ; Object class response
 ;
 
-$entity_response =           @{root} { $response_mixin,
-                                       $entity_mixin,
-                                       @{not} $error_mixin }
+; start_part strict_object_classes.jcr
+@{root} $entity_response = {
+    $response_mixin,
+    $entity_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$nameserver_response =       @{root} { $response_mixin,
-                                       $nameserver_mixin,
-                                       @{not} $error_mixin }
+@{root} $nameserver_response = {
+    $response_mixin,
+    $nameserver_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$domain_response =           @{root} { $response_mixin,
-                                       $domain_mixin,
-                                       @{not} $error_mixin }
+@{root} $domain_response = {
+    $response_mixin,
+    $domain_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$network_response =          @{root} { $response_mixin,
-                                       $network_mixin,
-                                       @{not} $error_mixin }
+@{root} $network_response = {
+    $response_mixin,
+    $network_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 
-$autnum_response =           @{root} { $response_mixin,
-                                       $autnum_mixin,
-                                       @{not} $error_mixin }
+@{root} $autnum_response = {
+    $response_mixin,
+    $autnum_mixin,
+    @{not} $error_mixin,
+    @{not} $search_results
+}
 ; end_part
-; start_part strict_help_and_error.jcr
 ;
 ; Help and error response
 ;
 
-$error_response =            @{root} { $response_mixin,
-                                       $error_mixin,
-                                       @{not} $object_class }
+; start_part strict_help_and_error.jcr
+@{root} $error_response =  {
+    $response_mixin,
+    $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}
 
-$help_response =             @{root} { $response_mixin,
-                                       $lang ?,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $help_response = {
+    $response_mixin,
+    $lang ?,
+    @{not} $error_mixin,
+    @{not} $object_class,
+    @{not} $search_results
+}
 ; end_part
-; start_part strict_search_responses.jcr
 ;
 ; Search responses
 ;
 
-$domainSearch_response =     @{root} { $response_mixin,
-                                       $lang ?,
-                                       $domainSearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+; start_part strict_search_responses.jcr
+@{root} $domainSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $domainSearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 
-$nameserverSearch_response = @{root} { $response_mixin,
-                                       $lang ?,
-                                       $nameserverSearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $nameserverSearch_response = {
+    $response_mixin,
+    $lang ?,
+    $nameserverSearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 
-$entitySearch_response =     @{root} { $response_mixin,
-                                       $lang ?,
-                                       $entitySearchResult,
-                                       @{not} $error_mixin,
-                                       @{not} $object_class }
+@{root} $entitySearch_response = {
+    $response_mixin,
+    $lang ?,
+    $entitySearchResult,
+    @{not} $error_mixin,
+    @{not} $object_class
+}
 ; end_part
-; start_part strict_object_class_mixins.jcr
 ;
 ; Object class mixins
 ;
 
+; start_part strict_object_class_mixins.jcr
 $object_class = (
-    $entity_mixin,
-    $nameserver_mixin,
-    $domain_mixin,
-    $network_mixin,
+    $entity_mixin |
+    $nameserver_mixin |
+    $domain_mixin |
+    $network_mixin |
     $autnum_mixin
+)
+; end_part
+;
+; All search results
+;
+
+; start_part strict_searches.jcr
+$search_results = (
+    $domainSearchResult |
+    $nameserverSearchResult |
+    $entitySearchResult
 )
 ; end_part
