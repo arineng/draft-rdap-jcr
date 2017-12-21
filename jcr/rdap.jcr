@@ -221,15 +221,18 @@ $entity_mixin = (
 )
 
 ; See RFC 7095
-$vcard = @{unordered} [
+$vcard = [
    [ "version", {}, "text", "4.0" ],
+   [ /^((?!fn).)*$/, $property_attributes ] *,
    [ "fn", {}, "text", string ],
-   [ string, 
-     { /.*/:any * }, 
-     $property_type, 
-     ( string | [ ( string | [ string * ] ) * ] ) 
-   ] *
+   [ string, $property_attributes ] *
 ]
+
+$property_attributes = (
+  { /.*/:any * },
+  $property_type,
+  ( string | [ ( string | [ string * ] ) * ] )
+)
 
 $property_type =: (
   "text" |
