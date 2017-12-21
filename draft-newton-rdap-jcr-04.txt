@@ -9,7 +9,7 @@ Expires: June 21, 2018
 
 
       A Description of RDAP JSON Messages Using JSON Content Rules
-                        draft-newton-rdap-jcr-03
+                        draft-newton-rdap-jcr-04
 
 Abstract
 

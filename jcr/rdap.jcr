@@ -137,8 +137,8 @@ $events = "events" : [ $event * ]
 $noActorEvent_mixin = (
     "eventAction" : string,
     "eventDate"   : datetime,
-    $links,
-    $lang
+    $links ?,
+    $lang ?
 )
 
 $noActorEvent = {
@@ -147,7 +147,7 @@ $noActorEvent = {
 
 $event = {
     $noActorEvent_mixin,
-    "eventActor" : string
+    "eventActor" : string ?
 }
 
 ; end_part
@@ -211,7 +211,7 @@ $entity_oc = {
 $entity_mixin = (
    "objectClassName" : "entity",
    $common_mixin,
-   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "vcardArray"      : [ "vcard", $vcard * ] ?,
    "asEventActor"    : [ $noActorEvent * ] ?,
    "roles"           : [ string * ] ?,
    $publicIds ?,
@@ -226,10 +226,24 @@ $vcard = @{unordered} [
    [ "fn", {}, "text", string ],
    [ string, 
      { /.*/:any * }, 
-     "text", 
-     ( string | [ string * ] ) 
+     $property_type, 
+     ( string | [ ( string | [ string * ] ) * ] ) 
    ] *
 ]
+
+$property_type =: (
+  "text" |
+  "uri" |
+  "date-time" |
+  "date-and-or-time" |  
+  "timestamp" |
+  "boolean" |
+  "integer" |
+  "float" |
+  "utc-offset" |
+  "language-tag" |
+  /^x-.*/ 
+)
 ; end_part
 
 ;
@@ -249,8 +263,8 @@ $nameserver_mixin = (
    "ldhName"         : fqdn,
    "unicodeName"     : idn ?,
    "ipAddresses"     : {
-       "v4" : [ ipv4 ? ] ?,
-       "ip6" : [ ipv6 ? ] ?
+       "v4" : [ ipv4 + ] ?,
+       "v6" : [ ipv6 + ] ?
    } ?,
    $entities ?
 )

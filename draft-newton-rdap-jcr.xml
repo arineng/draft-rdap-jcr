@@ -39,8 +39,8 @@
         <!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>
         <!ENTITY strict_searches PUBLIC '' 'jcr/strict_searches.jcr'>
 ]>
-<?rfc toc="true"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-03" ipr="trust200902">
+<?rfc toc="yes"?>
+<rfc category="info" docName="draft-newton-rdap-jcr-04" ipr="trust200902">
     <front>
         <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
@@ -331,10 +331,6 @@
             </t>
             <t>
                 For readability, two new rules are created to group the single objects and the search results.
-            </t>
-            <t>
-                In the following override rules for object class responses, the RDAP $error_mixin is specifically
-                disallowed.
             </t>
             <figure anchor="object_class_mixins">
                 <preamble>
