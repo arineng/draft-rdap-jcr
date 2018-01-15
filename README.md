@@ -7,9 +7,9 @@ JSON using JSON Content Rules (JCR).
 # Getting JCRValidator
 
 This project uses JCRValidator to test and setup the JCR. JCRValidator is a Ruby program
-and should be installed as a Ruby gem.
+and should be installed as a Ruby gem. As of this release, use 0.8.3.
 
-    gem install jcrvalidator
+    gem install jcrvalidator -v 0.8.3
 
 
 # Testing RDAP JSON
