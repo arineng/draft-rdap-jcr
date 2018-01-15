@@ -11,6 +11,10 @@
 <!ENTITY rdap_publicids PUBLIC '' 'jcr/rdap_publicids.jcr'>
 <!ENTITY rdap_common_mixin PUBLIC '' 'jcr/rdap_common_mixin.jcr'>
 <!ENTITY rdap_entity PUBLIC '' 'jcr/rdap_entity.jcr'>
+<!ENTITY rdap_vcard_array PUBLIC '' 'jcr/rdap_vcard_array.jcr'>
+<!ENTITY rdap_vcard_properties PUBLIC '' 'jcr/rdap_vcard_properties.jcr'>
+<!ENTITY rdap_vcard_params PUBLIC '' 'jcr/rdap_vcard_params.jcr'>
+<!ENTITY rdap_vcard_values PUBLIC '' 'jcr/rdap_vcard_values.jcr'>
 <!ENTITY rdap_nameserver PUBLIC '' 'jcr/rdap_nameserver.jcr'>
 <!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr'>
 <!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr'>

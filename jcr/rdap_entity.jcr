@@ -7,7 +7,7 @@ $entity_oc = {
 $entity_mixin = (
    "objectClassName" : "entity",
    $common_mixin,
-   "vcardArray"      : [ "vcard", [ $vcard * ] ] ?,
+   "vcardArray"      : [ "vcard", $vcard * ] ?,
    "asEventActor"    : [ $noActorEvent * ] ?,
    "roles"           : [ string * ] ?,
    $publicIds ?,
@@ -15,14 +15,3 @@ $entity_mixin = (
    "networks"        : [ $network_oc * ] ?,
    "autnums"         : [ $autnum_oc * ] ?
 )
-
-; See RFC 7095
-$vcard = @{unordered} [
-   [ "version", {}, "text", "4.0" ],
-   [ "fn", {}, "text", string ],
-   [ string, 
-     { /.*/:any * }, 
-     "text", 
-     ( string | [ string * ] ) 
-   ] *
-]

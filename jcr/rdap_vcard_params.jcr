@@ -1,0 +1,12 @@
+$vcard_language_param = "language" : $vcard_language_tag_type
+$vcard_pref_param = "pref" : $vcard_pref_type
+$vcard_altid_param = "altid" : string
+$vcard_pid_param = "pid" : $vcard_pid_type_array
+$vcard_type_param = "type" : $vcard_type_type_array
+$vcard_mediatype_param = "mediatype" : $vcard_mediatype_type
+$vcard_calscale_param = "calscale" : $vcard_calscale_type
+$vcard_sort_as_param = "sort-as" : $vcard_string_type_array
+$vcard_geo_param = "geo" : uri..geo
+$vcard_tz_param = "tz" : $vcard_utc_offset_type
+$vcard_label_param = "label" : $vcard_string_type_array
+$vcard_any_param = /^x\-[A-Za-z0-9\-]*$/ : $vcard_string_type_array

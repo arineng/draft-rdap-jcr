@@ -1,0 +1,47 @@
+$vcard = [
+   [ "version", {}, "text", "4.0" ],
+   $vcard_not_fn_properties * ,
+   [ "fn", { $vcard_type_param?, $vcard_language_param? ,
+             $vcard_altid_param? , $vcard_pid_param? ,
+             $vcard_pref_param?, $vcard_any_param? },
+             "text", string ],
+   $vcard_not_fn_properties *
+]
+
+$vcard_not_fn_properties =
+   (
+     $vcard_source |
+     $vcard_kind |
+     $vcard_n |
+     $vcard_nicname |
+     $vcard_photo |
+     $vcard_bday |
+     $vcard_anniversary |
+     $vcard_gender |
+     $vcard_adr |
+     $vcard_tel |
+     $vcard_email |
+     $vcard_impp |
+     $vcard_lang |
+     $vcard_tz |
+     $vcard_geo |
+     $vcard_title |
+     $vcard_role |
+     $vcard_logo |
+     $vcard_org |
+     $vcard_member |
+     $vcard_related |
+     $vcard_categories |
+     $vcard_note |
+     $vcard_prodid |
+     $vcard_rev |
+     $vcard_sound |
+     $vcard_uid |
+     $vcard_clientpidmap |
+     $vcard_url |
+     $vcard_key |
+     $vcard_fburl |
+     $vcard_caladruri |
+     $vcard_caluri |
+     $vcard_x10
+   )

@@ -1,0 +1,68 @@
+$vcard_string_type_array =
+  ( string | [ ( string | [ string * ] ) * ] )
+$vcard_language_tag_type =:
+  /[a-z]{2}(-[A-Z][a-zA-Z]*(\-[A-Z]{2})?)?/
+$vcard_mediatype_type =: /^\w+\/[\-.\w]+(?:\+[\-.\w]+)?$/
+$vcard_utc_offset_type =: /^(([\-\+]\d{1,2}):?(\d{2})?)?$/
+$vcard_date_or_time =: (
+  /^(\d{4})-?(\d{2})-?(\d{2})$/ |
+  /^(\d{4})$/ |
+  /^--(\d{2})-?(\d{2})$/ |
+  /^--(\d{2})$/ |
+  /^---(\d{2})$/ |
+  /^(\d{2})(([-+]\d{1,2}):?(\d{2})?)?$/ |
+  /^(\d{2}):?(\d{2})(([\-\+]\d{1,2}):?(\d{2})?)?$/ |
+  /^(\d{2}):?(\d{2}):?(\d{2})(Z|([\-\+]\d{1,2}):?(\d{2})?)?$/ |
+  /^-(\d{2}):?(\d{2})(Z|([\-\+]\d{1,2}):?(\d{2})?)?$/ |
+  /^-(\d{2})(([\-\+]\d{1,2}):?(\d{2})?)?$/ |
+  /^--(\d{2})(([\-\+]\d{1,2}):?(\d{2})?)?$/
+)
+$vcard_date_and_or_time_type =: (
+  datetime | $vcard_date_or_time
+)
+$vcard_group_type =: /^[a-zA-Z0-9\-]+$/
+$vcard_type_type =: (
+  "home" | "work" | $vcard_tel_type | $vcard_related_type |
+  $vcard_x_name_type
+)
+$vcard_type_type_array = (
+  $vcard_type_type | [ $vcard_type_type * ]
+)
+$vcard_tel_type =: (
+  "text" | "voice" | "fax" | "cell" | "video" |
+  "pager" | "textphone" | "main-number"
+)
+$vcard_tel_type_array = ( $vcard_tel_type | [ $vcard_tel_type * ] )
+$vcard_related_type =: (
+  "contact" | "acquaintance" | "friend" | "met" |
+  "co-worker" | "colleague" | "co-resident" |
+  "neighbor" | "child" | "parent" | "sibling" |
+  "spouse" | "kin" | "muse" | "crush" | "date" |
+  "sweetheart" | "me" | "agent" | "emergency"
+)
+$vcard_related_type_array = (
+  $vcard_related_type | [ $vcard_related_type * ]
+)
+$vcard_index_type =: /^[1-9]?[0-9]*$/
+$vcard_expertise_level_type =: (
+  "beginner" | "average" | "expert"
+)
+$vcard_hobby_type =: ( "high" | "medium" | "low" )
+$vcard_pref_type =: /^[1-9]?[0-9]{1}$|^100$/
+$vcard_pid_type =: /^[0-9]+(\.[0-9]+)?$/
+$vcard_pid_type_array = (
+  $vcard_pid_type | [ $vcard_pid_type * ]
+)
+$vcard_gender_type =: ( "M" | "F" | "O" | "N" | "U" )
+$vcard_gender_type_array = (
+  $vcard_gender_type | [ $vcard_gender_type * ]
+)
+$vcard_kind_type =: (
+  "individual" | "group" | "org" | "location" |
+  "application" | "device"
+)
+$vcard_iana_token_type =: /^[A-Za-z0-9\-]*$/
+$vcard_x_name_type =: /^x\-[A-Za-z0-9\-]*$/
+$vcard_calscale_type =: (
+  "gregorian" | $vcard_iana_token_type | $vcard_x_name_type
+)

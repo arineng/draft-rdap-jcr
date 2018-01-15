@@ -3,8 +3,8 @@ $events = "events" : [ $event * ]
 $noActorEvent_mixin = (
     "eventAction" : string,
     "eventDate"   : datetime,
-    $links,
-    $lang
+    $links ?,
+    $lang ?
 )
 
 $noActorEvent = {
@@ -13,6 +13,6 @@ $noActorEvent = {
 
 $event = {
     $noActorEvent_mixin,
-    "eventActor" : string
+    "eventActor" : string ?
 }
 

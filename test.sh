@@ -60,6 +60,12 @@ done
 # Bad JSON
 #
 
+# entities
+for bad_json in json/bad/entity_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S entity_response $bad_json" 3
+done
+
 # networks
 for bad_json in json/bad/network_response/*.json
 do

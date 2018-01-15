@@ -25,6 +25,10 @@
         <!ENTITY rdap_publicids PUBLIC '' 'jcr/rdap_publicids.jcr'>
         <!ENTITY rdap_common_mixin PUBLIC '' 'jcr/rdap_common_mixin.jcr'>
         <!ENTITY rdap_entity PUBLIC '' 'jcr/rdap_entity.jcr'>
+        <!ENTITY rdap_vcard_array PUBLIC '' 'jcr/rdap_vcard_array.jcr'>
+        <!ENTITY rdap_vcard_properties PUBLIC '' 'jcr/rdap_vcard_properties.jcr'>
+        <!ENTITY rdap_vcard_params PUBLIC '' 'jcr/rdap_vcard_params.jcr'>
+        <!ENTITY rdap_vcard_values PUBLIC '' 'jcr/rdap_vcard_values.jcr'>
         <!ENTITY rdap_nameserver PUBLIC '' 'jcr/rdap_nameserver.jcr'>
         <!ENTITY rdap_domain PUBLIC '' 'jcr/rdap_domain.jcr'>
         <!ENTITY rdap_network PUBLIC '' 'jcr/rdap_network.jcr'>
@@ -40,7 +44,7 @@
         <!ENTITY strict_searches PUBLIC '' 'jcr/strict_searches.jcr'>
 ]>
 <?rfc toc="yes"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-04" ipr="trust200902">
+<rfc category="info" docName="draft-newton-rdap-jcr-05" ipr="trust200902">
     <front>
         <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
@@ -121,14 +125,53 @@
             </t>
             <section title="Entity Object Class">
                 <t>
-                    The Entity object class represents persons or organizations. It incorporates
-                    <xref target="RFC7095">jCard</xref> (vCard in JSON) for contact information.
-                    The rules supplied here only provide for a basic validation of jCard, as the
-                    validation of jCard is beyond the scope of this document.
+                    The Entity object class represents persons or organizations.
                 </t>
                 <figure anchor="entity">
                     <artwork xml:space="preserve" align="center">
 &rdap_entity;
+                </artwork>
+                </figure>
+                <t>
+                    The Entity object class incorporates
+                    <xref target="RFC7095">jCard</xref> (vCard in JSON) for contact information.
+                </t>
+                <figure anchor="vcard_array">
+                    <preamble>
+                        Each jCard is made up of vCard properties in an array.
+                        The very first property must be "version", and the "fn"
+                        property must appear once and only once.
+                    </preamble>
+                    <artwork xml:space="preserve" align="center">
+&rdap_vcard_array;
+                </artwork>
+                </figure>
+                <figure anchor="vcard_properties">
+                    <preamble>
+                        Each vCard property is composed of a property name,
+                        a set of parameters, and data values.
+                    </preamble>
+                    <artwork xml:space="preserve" align="center">
+&rdap_vcard_properties;
+                </artwork>
+                </figure>
+                <figure anchor="vcard_params">
+                    <preamble>
+                        vCard parameters are grouped into a JSON object, where
+                        each member of the object is a parameter.
+                    </preamble>
+                    <artwork xml:space="preserve" align="center">
+&rdap_vcard_params;
+                </artwork>
+                </figure>
+                <figure anchor="vcard_values">
+                    <preamble>
+                        vCard values are determined by a string denoting the
+                        value type, followed by the value or an array of those
+                        values.
+                    </preamble>
+                    <artwork xml:space="preserve" align="center">
+&rdap_vcard_values;
                 </artwork>
                 </figure>
             </section>
