@@ -1,7 +1,7 @@
 {
   "objectClassName" : "nameserver",
   "ldhName" : "ns1.example.com",
-  "nameserverSearchResult" : [
+  "nameserverSearchResults" : [
     {
       "objectClassName": "nameserver",
       "ldhName": "ns1.example.com"

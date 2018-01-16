@@ -788,11 +788,11 @@ $error_mixin = (
 
 ; start_part rdap_searches.jcr
 $domainSearchResult =
-    "domainSearchResult"     : [ $domain_oc * ]
+    "domainSearchResults"     : [ $domain_oc * ]
 
 $nameserverSearchResult =
-    "nameserverSearchResult" : [ $nameserver_oc * ]
+    "nameserverSearchResults" : [ $nameserver_oc * ]
 
 $entitySearchResult =
-    "entitySearchResult"     : [ $entity_oc * ]
+    "entitySearchResults"     : [ $entity_oc * ]
 ; end_part
