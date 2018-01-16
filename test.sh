@@ -56,6 +56,24 @@ do
   assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S help_response $good_json" 0
 done
 
+# domain search
+for good_json in json/good/domainSearch_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S domainSearch_response $good_json" 0
+done
+
+# entity search
+for good_json in json/good/entitySearch_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S entitySearch_response $good_json" 0
+done
+
+# nameserver search
+for good_json in json/good/nameserverSearch_response/*.json
+do
+  assert_raises "jcr -r jcr/rdap.jcr -o jcr/strict.jcr -S nameserverSearch_response $good_json" 0
+done
+
 #
 # Bad JSON
 #
