@@ -3,7 +3,9 @@ $notices = [ $notice * ]
 $notice = {
     "title"       : string ?,
     "description" : [ string * ],
-    "type"        : string ?,
+    $noticeRemarkType ?,
     $links ?,
     $lang ?
 }
+
+$noticeRemarkType = "type" : string

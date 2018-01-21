@@ -1,0 +1,16 @@
+$eventAction = "eventAction" : $eventAction_values
+
+$eventAction_values = (
+    "registration" |
+    "reregistration" |
+    "last changed" |
+    "expiration" |
+    "deletion" |
+    "reinstantiation" |
+    "transfer" |
+    "locked" |
+    "unlocked" |
+    "last update of RDAP database" |
+    "registrar expiration" |
+    "enum validation expiration"
+)

@@ -1,11 +1,13 @@
 $events = "events" : [ $event * ]
 
 $noActorEvent_mixin = (
-    "eventAction" : string,
+    $eventAction,
     "eventDate"   : datetime,
     $links ?,
     $lang ?
 )
+
+$eventAction = "eventAction" : string
 
 $noActorEvent = {
     $noActorEvent_mixin

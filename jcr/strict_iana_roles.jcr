@@ -1,0 +1,16 @@
+$roles = "roles" : [ $role_values * ]
+
+$role_values = (
+    "registrant" |
+    "technical" |
+    "administrative" |
+    "abuse" |
+    "billing" |
+    "registrar" |
+    "reseller" |
+    "sponsor" |
+    "proxy" |
+    "notifications" |
+    "noc"
+)
+

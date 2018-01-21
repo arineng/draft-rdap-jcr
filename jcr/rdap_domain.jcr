@@ -16,12 +16,15 @@ $domain_mixin = (
 )
 
 $variant = {
+   $variantRelation ?,
    "relation"     : [ string * ] ?,
    "idnTable"     : string ?,
    "variantNames" : [
        { "ldhName" : fqdn, "unicodeName" : idn } *
    ]
 }
+
+$variantRelation = "relation" : [ string * ]
 
 $secureDNS = "secureDNS" : {
    "zoneSigned"       : boolean ?,

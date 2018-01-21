@@ -102,10 +102,12 @@ $notices = [ $notice * ]
 $notice = {
     "title"       : string ?,
     "description" : [ string * ],
-    "type"        : string ?,
+    $noticeRemarkType ?,
     $links ?,
     $lang ?
 }
+
+$noticeRemarkType = "type" : string
 
 ;
 ; RFC 7483 Section 4.4 - Language Identifier
@@ -123,11 +125,13 @@ $lang = ( "lang" : $lang_value )
 $events = "events" : [ $event * ]
 
 $noActorEvent_mixin = (
-    "eventAction" : string,
+    $eventAction,
     "eventDate"   : datetime,
     $links ?,
     $lang ?
 )
+
+$eventAction = "eventAction" : string
 
 $noActorEvent = {
     $noActorEvent_mixin
@@ -191,12 +195,14 @@ $entity_mixin = (
    $common_mixin,
    "vcardArray"      : [ "vcard", $vcard * ] ?,
    "asEventActor"    : [ $noActorEvent * ] ?,
-   "roles"           : [ string * ] ?,
+   $roles ?,
    $publicIds ?,
    $entities ?,
    "networks"        : [ $network_oc * ] ?,
    "autnums"         : [ $autnum_oc * ] ?
 )
+
+$roles = "roles" : [ string * ]
 
 ; jCard (see RFC 7095) is an algorithm for converting
 ; vCard to JSON. Each jCard is represented by an array of
@@ -656,12 +662,15 @@ $domain_mixin = (
 )
 
 $variant = {
+   $variantRelation ?,
    "relation"     : [ string * ] ?,
    "idnTable"     : string ?,
    "variantNames" : [
        { "ldhName" : fqdn, "unicodeName" : idn } *
    ]
 }
+
+$variantRelation = "relation" : [ string * ]
 
 $secureDNS = "secureDNS" : {
    "zoneSigned"       : boolean ?,
@@ -744,10 +753,10 @@ $error_mixin = (
 ;
 
 $domainSearchResult =
-    "domainSearchResult"     : [ $domain_oc * ]
+    "domainSearchResults"     : [ $domain_oc + ]
 
 $nameserverSearchResult =
-    "nameserverSearchResult" : [ $nameserver_oc * ]
+    "nameserverSearchResults" : [ $nameserver_oc + ]
 
 $entitySearchResult =
-    "entitySearchResult"     : [ $entity_oc * ]
+    "entitySearchResults"     : [ $entity_oc + ]

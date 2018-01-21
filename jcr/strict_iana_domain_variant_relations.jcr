@@ -1,0 +1,9 @@
+$variantRelation = "relation" : [ $variantRelation_values * ]
+
+$variantRelation_values = (
+    "registered" |
+    "unregistered" |
+    "registration restricted" |
+    "open registration" |
+    "conjoined"
+)

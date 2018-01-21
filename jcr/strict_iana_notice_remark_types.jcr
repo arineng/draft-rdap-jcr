@@ -1,0 +1,10 @@
+$noticeRemarkType = "type" : $noticeRemarkType_values
+
+$noticeRemarkType_values = (
+    "result set truncated due to authorization" |
+    "result set truncated due to excessive load" |
+    "result set truncated due to unexplainable reasons" |
+    "object truncated due to authorization" |
+    "object truncated due to excessive load" |
+    "object truncated due to unexplainable reasons"
+)

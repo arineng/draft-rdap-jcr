@@ -4,3 +4,8 @@
 <!ENTITY strict_search_responses PUBLIC '' 'jcr/strict_search_responses.jcr'>
 <!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>
 <!ENTITY strict_searches PUBLIC '' 'jcr/strict_searches.jcr'>
+<!ENTITY strict_iana_status_values PUBLIC '' 'jcr/strict_iana_status_values.jcr'>
+<!ENTITY strict_iana_notice_remark_types PUBLIC '' 'jcr/strict_iana_notice_remark_types.jcr'>
+<!ENTITY strict_iana_roles PUBLIC '' 'jcr/strict_iana_roles.jcr'>
+<!ENTITY strict_iana_domain_variant_relations PUBLIC '' 'jcr/strict_iana_domain_variant_relations.jcr'>
+<!ENTITY strict_iana_event_actions PUBLIC '' 'jcr/strict_iana_event_actions.jcr'>

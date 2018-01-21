@@ -42,9 +42,14 @@
         <!ENTITY strict_search_responses PUBLIC '' 'jcr/strict_search_responses.jcr'>
         <!ENTITY strict_object_class_mixins PUBLIC '' 'jcr/strict_object_class_mixins.jcr'>
         <!ENTITY strict_searches PUBLIC '' 'jcr/strict_searches.jcr'>
+        <!ENTITY strict_iana_status_values PUBLIC '' 'jcr/strict_iana_status_values.jcr'>
+        <!ENTITY strict_iana_notice_remark_types PUBLIC '' 'jcr/strict_iana_notice_remark_types.jcr'>
+        <!ENTITY strict_iana_roles PUBLIC '' 'jcr/strict_iana_roles.jcr'>
+        <!ENTITY strict_iana_domain_variant_relations PUBLIC '' 'jcr/strict_iana_domain_variant_relations.jcr'>
+        <!ENTITY strict_iana_event_actions PUBLIC '' 'jcr/strict_iana_event_actions.jcr'>
 ]>
 <?rfc toc="yes"?>
-<rfc category="info" docName="draft-newton-rdap-jcr-05" ipr="trust200902">
+<rfc category="info" docName="draft-newton-rdap-jcr-06" ipr="trust200902">
     <front>
         <title abbrev="JCR for RDAP">A Description of RDAP JSON Messages Using JSON Content Rules</title>
         <author fullname="Andrew Lee Newton" initials="A.L." surname="Newton">
@@ -421,6 +426,56 @@
 &strict_search_responses;
                 </artwork>
             </figure>
+            <t>
+                Stricter validation is also possible by overriding rules that take generic strings
+                and overriding them with enumerated lists of values from the RDAP JSON values
+                registry.
+            </t>
+            <figure anchor="iana_domain_variant_relations">
+                <preamble>
+                    These rules override the generic domain variant relations in RDAP with values
+                    found in the IANA registry.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_iana_domain_variant_relations;
+                </artwork>
+            </figure>
+            <figure anchor="iana_event_actions">
+                <preamble>
+                    These rules override the generic event actions in RDAP with values
+                    found in the IANA registry.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_iana_event_actions;
+                </artwork>
+            </figure>
+            <figure anchor="iana_notice_remark_types">
+                <preamble>
+                    These rules override the generic notice and remark types in RDAP with values
+                    found in the IANA registry.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_iana_notice_remark_types;
+                </artwork>
+            </figure>
+            <figure anchor="iana_roles">
+                <preamble>
+                    These rules override the generic entity roles in RDAP with values
+                    found in the IANA registry.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_iana_roles;
+                </artwork>
+            </figure>
+            <figure anchor="iana_status_values">
+                <preamble>
+                    These rules override the generic status values in RDAP with values
+                    found in the IANA registry.
+                </preamble>
+                <artwork xml:space="preserve" align="center">
+&strict_iana_status_values;
+                </artwork>
+            </figure>
         </section>
         <section title="Complete Rulesets for RDAP">
             <t>
@@ -456,5 +511,16 @@
             &I-D.newton-json-content-rules;
             
         </references>
+        <section title="Acknowledgements">
+            <t>
+                Bernhard Reutner-Fischer and participants of the IETF REGEXT mailing list contributed
+                to the JCR found in this document.
+            </t>
+            <t>
+                Mario Laffredo provided significant feedback on the rulesets in this document,
+                especially with regard to jCard validation, and provided helpful guidance on
+                validation based on his own experience with the implementation of an RDAP validator.
+            </t>
+        </section>
     </back>
 </rfc>
