@@ -4,8 +4,8 @@
 
 Network Working Group                                          A. Newton
 Internet-Draft                                                      ARIN
-Intended status: Informational                          January 21, 2018
-Expires: July 25, 2018
+Intended status: Informational                          January 22, 2018
+Expires: July 26, 2018
 
 
       A Description of RDAP JSON Messages Using JSON Content Rules
@@ -24,14 +24,14 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 25, 2018.
+   This Internet-Draft will expire on July 26, 2018.
 
 Copyright Notice
 
@@ -40,7 +40,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Newton                    Expires July 25, 2018                 [Page 1]
+Newton                    Expires July 26, 2018                 [Page 1]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Newton                    Expires July 25, 2018                 [Page 2]
+Newton                    Expires July 26, 2018                 [Page 2]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -165,7 +165,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 3]
+Newton                    Expires July 26, 2018                 [Page 3]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -221,7 +221,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 4]
+Newton                    Expires July 26, 2018                 [Page 4]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -277,7 +277,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 5]
+Newton                    Expires July 26, 2018                 [Page 5]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -333,7 +333,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 6]
+Newton                    Expires July 26, 2018                 [Page 6]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -389,7 +389,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 7]
+Newton                    Expires July 26, 2018                 [Page 7]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -445,7 +445,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 8]
+Newton                    Expires July 26, 2018                 [Page 8]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -501,7 +501,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                 [Page 9]
+Newton                    Expires July 26, 2018                 [Page 9]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -557,7 +557,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 10]
+Newton                    Expires July 26, 2018                [Page 10]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -613,7 +613,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 11]
+Newton                    Expires July 26, 2018                [Page 11]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -669,7 +669,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 12]
+Newton                    Expires July 26, 2018                [Page 12]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -725,7 +725,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 13]
+Newton                    Expires July 26, 2018                [Page 13]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -781,7 +781,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 14]
+Newton                    Expires July 26, 2018                [Page 14]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -837,7 +837,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 15]
+Newton                    Expires July 26, 2018                [Page 15]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -893,7 +893,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 16]
+Newton                    Expires July 26, 2018                [Page 16]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -949,7 +949,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 17]
+Newton                    Expires July 26, 2018                [Page 17]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1005,7 +1005,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 18]
+Newton                    Expires July 26, 2018                [Page 18]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1061,7 +1061,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 19]
+Newton                    Expires July 26, 2018                [Page 19]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1117,7 +1117,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 20]
+Newton                    Expires July 26, 2018                [Page 20]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1173,7 +1173,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 21]
+Newton                    Expires July 26, 2018                [Page 21]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1229,7 +1229,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 22]
+Newton                    Expires July 26, 2018                [Page 22]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1285,7 +1285,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 23]
+Newton                    Expires July 26, 2018                [Page 23]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1341,7 +1341,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 24]
+Newton                    Expires July 26, 2018                [Page 24]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1397,7 +1397,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 25]
+Newton                    Expires July 26, 2018                [Page 25]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1453,7 +1453,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 26]
+Newton                    Expires July 26, 2018                [Page 26]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1509,7 +1509,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 27]
+Newton                    Expires July 26, 2018                [Page 27]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1565,7 +1565,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 28]
+Newton                    Expires July 26, 2018                [Page 28]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1621,7 +1621,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 29]
+Newton                    Expires July 26, 2018                [Page 29]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1677,7 +1677,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 30]
+Newton                    Expires July 26, 2018                [Page 30]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1733,7 +1733,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 31]
+Newton                    Expires July 26, 2018                [Page 31]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1789,7 +1789,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 32]
+Newton                    Expires July 26, 2018                [Page 32]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1845,7 +1845,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 33]
+Newton                    Expires July 26, 2018                [Page 33]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1901,7 +1901,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 34]
+Newton                    Expires July 26, 2018                [Page 34]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -1957,7 +1957,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 35]
+Newton                    Expires July 26, 2018                [Page 35]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2013,7 +2013,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 36]
+Newton                    Expires July 26, 2018                [Page 36]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2069,7 +2069,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 37]
+Newton                    Expires July 26, 2018                [Page 37]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2125,7 +2125,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 38]
+Newton                    Expires July 26, 2018                [Page 38]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2181,7 +2181,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 39]
+Newton                    Expires July 26, 2018                [Page 39]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2237,7 +2237,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 40]
+Newton                    Expires July 26, 2018                [Page 40]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2293,7 +2293,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 41]
+Newton                    Expires July 26, 2018                [Page 41]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2349,7 +2349,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 42]
+Newton                    Expires July 26, 2018                [Page 42]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2405,7 +2405,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 43]
+Newton                    Expires July 26, 2018                [Page 43]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2461,7 +2461,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 44]
+Newton                    Expires July 26, 2018                [Page 44]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2517,7 +2517,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 45]
+Newton                    Expires July 26, 2018                [Page 45]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2573,7 +2573,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 46]
+Newton                    Expires July 26, 2018                [Page 46]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2629,7 +2629,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 47]
+Newton                    Expires July 26, 2018                [Page 47]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2685,7 +2685,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 48]
+Newton                    Expires July 26, 2018                [Page 48]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2741,7 +2741,7 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 
 
-Newton                    Expires July 25, 2018                [Page 49]
+Newton                    Expires July 26, 2018                [Page 49]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
@@ -2786,21 +2786,25 @@ Internet-Draft                JCR for RDAP                  January 2018
 
 10.  Normative References
 
+   [I-D.newton-json-content-rules]
+              Newton, A. and P. Cordell, "A Language for Rules
+              Describing JSON Content", draft-newton-json-content-
+              rules-09 (work in progress), September 2017.
+
    [RFC5988]  Nottingham, M., "Web Linking", RFC 5988,
-              DOI 10.17487/RFC5988, October 2010, <https://www.rfc-
-              editor.org/info/rfc5988>.
-
-   [RFC7095]  Kewisch, P., "jCard: The JSON Format for vCard", RFC 7095,
-              DOI 10.17487/RFC7095, January 2014, <https://www.rfc-
-              editor.org/info/rfc7095>.
+              DOI 10.17487/RFC5988, October 2010,
+              <https://www.rfc-editor.org/info/rfc5988>.
 
 
 
-
-Newton                    Expires July 25, 2018                [Page 50]
+Newton                    Expires July 26, 2018                [Page 50]
 
 Internet-Draft                JCR for RDAP                  January 2018
 
+
+   [RFC7095]  Kewisch, P., "jCard: The JSON Format for vCard", RFC 7095,
+              DOI 10.17487/RFC7095, January 2014,
+              <https://www.rfc-editor.org/info/rfc7095>.
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
@@ -2808,13 +2812,8 @@ Internet-Draft                JCR for RDAP                  January 2018
 
    [RFC7483]  Newton, A. and S. Hollenbeck, "JSON Responses for the
               Registration Data Access Protocol (RDAP)", RFC 7483,
-              DOI 10.17487/RFC7483, March 2015, <https://www.rfc-
-              editor.org/info/rfc7483>.
-
-   [I-D.newton-json-content-rules]
-              Newton, A. and P. Cordell, "A Language for Rules
-              Describing JSON Content", draft-newton-json-content-
-              rules-09 (work in progress), September 2017.
+              DOI 10.17487/RFC7483, March 2015,
+              <https://www.rfc-editor.org/info/rfc7483>.
 
 Appendix A.  Acknowledgements
 
@@ -2853,4 +2852,5 @@ Author's Address
 
 
 
-Newton                    Expires July 25, 2018                [Page 51]
+
+Newton                    Expires July 26, 2018                [Page 51]
