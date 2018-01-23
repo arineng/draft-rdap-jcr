@@ -517,7 +517,7 @@
                 to the JCR found in this document.
             </t>
             <t>
-                Mario Laffredo provided significant feedback on the rulesets in this document,
+                Mario Loffredo provided significant feedback on the rulesets in this document,
                 especially with regard to jCard validation, and provided helpful guidance on
                 validation based on his own experience with the implementation of an RDAP validator.
             </t>
